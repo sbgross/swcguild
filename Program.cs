@@ -1,86 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
+using BattleShip.BLL.GameLogic;
+using BattleShip.BLL.Requests;
+using BattleShip.BLL.Responses;
+using BattleShip.BLL.Ships;
 
-namespace GetWednesdays
+namespace BattleShip.UI
 {
     class Program
     {
         static void Main(string[] args)
-        {            
-            DateTime date = GetDateFromUser();
-            int numberWednesdays = GetNumberWednesdays();
+        {
+            Console.WindowWidth = 100;
+            Console.WindowHeight = 50;
+            bool replay = false;
 
-            List<DateTime> ListOfWednesdays = GetListOfWednesdays(date, numberWednesdays);
+            GameManager game = new GameManager();
 
-            PrintList(ListOfWednesdays);
+            game.DisplayWelcomeMessage();
+            game.RequestPlayerName();
+
+            do
+            {
+                game.SetUp();
+                game.PlayGame();
+
+                Console.Write("Would you like to play again Y or N? ");
+                string newGame = Console.ReadLine().ToUpper();
+                if (newGame == "Y")
+                {
+                    Console.Clear();
+                    replay = true;                    
+                }
+                else
+                {
+                    replay = false;
+                    Console.WriteLine("Thank you for playing!");
+                }
+            } while (replay);
+
             Console.ReadLine();
-        }
-
-        private static void PrintList(List<DateTime> ListOfWednesdays)
-        {
-            foreach (var d in ListOfWednesdays)
-            {
-                Console.WriteLine(d.ToString("d"));
-            }
-        }
-
-        private static List<DateTime> GetListOfWednesdays(DateTime date, int numberWednesdays)
-        {
-            List<DateTime> ListOfWednesdays = new List<DateTime>();
-            int counter = 0;
-
-            while (counter < numberWednesdays)
-            {
-                date = date.AddDays(1);
-                if (date.DayOfWeek == DayOfWeek.Wednesday)
-                {
-                    ListOfWednesdays.Add(date);
-                    counter++;
-                }                
-            }
-
-            return ListOfWednesdays;
-        }
-
-        private static int GetNumberWednesdays()
-        {
-            int number;
-            while (true)
-            {
-                Console.WriteLine("Please enter the number of subsequent Wednesdays: ");
-                string answer = Console.ReadLine();
-
-                if (int.TryParse(answer, out number))
-                {
-                    return number;
-                }
-                else
-                {
-                    Console.WriteLine("That is not a valid number. Please re-enter.");
-                }
-            }  
-        }
-
-        private static DateTime GetDateFromUser()
-        {
-            DateTime date;
-            while (true)
-            {
-                Console.WriteLine("Please enter a date: ");
-                string answer = Console.ReadLine();
-                
-                if (DateTime.TryParse(answer, out date))
-                {
-                    return date;
-                }
-                else
-                {
-                    Console.WriteLine("That is not a valid date. Please re-enter.");
-                }
-            }            
-        }
+        }        
     }
 }
