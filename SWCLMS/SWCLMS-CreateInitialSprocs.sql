@@ -2,6 +2,16 @@ USE SWC_LMS
 GO
 
 --------------------------------------------------------
+CREATE PROCEDURE UserViewDetails  (  --6/12 Slide #4 **DONE**
+@UserID int)
+ 
+AS
+ 
+Select LastName, FirstName, GradeLevelID,Email, SuggestedRole --NEED ROLES
+FROM LMSUser
+WHERE UserID = @UserID
+
+--------------------------------------------------------
 CREATE PROCEDURE UserUpdateDetails(
 @UserID int,
 @FirstName varchar(30),
@@ -194,16 +204,44 @@ INNER JOIN RosterAssignment ON Assignment.AssignmentID = RosterAssignment.Assign
 WHERE CourseID = @CourseID
 
 --------------------------------------------------------
-CREATE PROCEDURE AdministratorDashboardSlide2  (  --6/10 Slide #2 **REVIEW**
-@UserID int)
+ALTER PROCEDURE AdministratorDashboardSlide2  --(  --6/10 Slide #2 **REVIEW**
+--@UserID int)
 
 AS
 
-SELECT LastName,FirstName,Email,SuggestedRole
+SELECT UserID,ID,FirstName,LastName,Email,SuggestedRole,GradeLevelID
+FROM LMSUser
+
+SELECT *
 FROM LMSUser
 
 --------------------------------------------------------
-CREATE PROCEDURE MainPageSlide1  (  --6/10 Slide #1 **REVIEW**
-@USerID int,
+CREATE PROCEDURE MainPageExistingUserLogin  (  --6/11 Slide #1 **REVIEW**
+@UserID int,
 @Email varchar(50),
-@Password  --??
+@Password  --??)
+
+AS
+
+SELECT UserID,Email
+FROM LMSUser
+WHERE UserID = @UserID AND Email = @Email
+
+--------------------------------------------------------
+CREATE PROCEDURE MainPageNewUserLogin  (  --6/11 Slide #1 **REVIEW**
+@UserID int,
+@FirstName varchar(30),
+@LastName varchar(30),
+@Email varchar (50),
+@Password --?
+@ConfirmPassword  --?
+@SuggestedRole varchar (50),
+@GradeLevelID tinyint)
+
+AS
+
+SELECT UserID,FirstName,LastName,Email,SuggestedRole,GradeLevelID
+FROM LMSUser
+WHERE UserID = @UserID AND FirstName = @FirstName AND LastName = @LastName AND Email = @Email
+AND SuggestedRole = @SuggestedRole AND GradeLevelID = @GradeLevelID
+
