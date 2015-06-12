@@ -1,0 +1,49 @@
+﻿@model SWCLMS.Models.DataResponse<SWCLMS.Models.Tables.LmsUser>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<body>
+    <h2>User Details</h2>
+
+
+    <div class="row">
+        <div class="col-xs-12">
+            @Html.ActionLink("search for users", "Search", "Admin")
+        </div>
+
+        <div>
+            @using (Html.BeginForm("Edit", "Admin", FormMethod.Post))
+            {
+                @Html.HiddenFor(u => u.Data.UserID)
+                <p>
+                    <label>Last Name</label>
+                    @Html.TextBoxFor(u => u.Data.LastName)
+                </p>
+
+                <p>
+                    <label>First Name</label>
+                    @Html.TextBoxFor(u => u.Data.FirstName)
+                </p>
+
+                <p>
+                    <label>Grade Level</label>
+                    @Html.TextBoxFor(u => u.Data.GradeLevelID)
+                </p>
+
+                <p>
+                    <label>User Name</label>
+                    @Html.DisplayFor(u => u.Data.Email)
+                </p>
+
+                <p>
+                    <label>Suggested Role</label>
+                    @Html.DisplayFor(u => u.Data.SuggestedRole)
+                </p>
+
+                <button>Save</button>
+            }
+        </div>
+    </div>
+</body>
