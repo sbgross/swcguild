@@ -2,12 +2,12 @@ USE SWC_LMS
 GO
 
 --------------------------------------------------------
-CREATE PROCEDURE UserViewDetails  (  --6/12 Slide #4 **DONE**
+ALTER PROCEDURE UserViewDetails  (  --6/12 Slide #4 **DONE**
 @UserID int)
  
 AS
  
-Select LastName, FirstName, GradeLevelID,Email, SuggestedRole --NEED ROLES
+Select UserId, LastName, FirstName, GradeLevelID,Email, SuggestedRole --NEED ROLES
 FROM LMSUser
 WHERE UserID = @UserID
 
