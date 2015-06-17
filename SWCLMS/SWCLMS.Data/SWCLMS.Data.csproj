@@ -43,6 +43,7 @@
     <Compile Include="Mocks\MockLmsUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="SQL\SqlLMSGradeLevelRepository.cs" />
     <Compile Include="SQL\SqlLmsUserRepository.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -52,23 +52,13 @@ VALUES (NULL,'Eric', 'Wise', 'ericw@swcg.com', 'Student', 1),
 (NULL,'Edna', 'Crabapple', 'ha@swcg.com', 'Teacher', NULL),
 (NULL,'Seymore', 'Skinners', 'nam@swcg.com', 'Administrator', NULL)
 
-INSERT INTO StudentGuardian(GuardianID, StudentID) --6/9 **run me**
-VALUES (30,14),
-(31,14),
-(30,15),
+INSERT INTO StudentGuardian(GuardianID, StudentID)
+VALUES (31,14),
 (31,15),
-(30,16),
-(31,16)
-
-
-SELECT *
-FROM StudentGuardian
-
-SELECT *
-FROM LMSUser
-
-DELETE FROM StudentGuardian
-WHERE GuardianID = 31 AND StudentID = 4;
+(30,14),
+(30,15),
+(31,16),
+(30,16)
 
 INSERT INTO Subject(SubjectName)
 VALUES ('Math'),
@@ -82,6 +72,11 @@ INSERT INTO Course(TeacherID, SubjectID, CourseName, CourseDescription, GradeLev
 VALUES
 (1, 1, 'Algebra 2', 'This is the second Algebra class, we will introduce more complex things.', 8, 1, '20140101', '20140509'),
 (1, 1, 'Algebra 1', 'This is the first Algebra 1 class, we will introduce variables and equations.', 8, 0, '20150101', '20150608')
+
+UPDATE  COURSE
+SET TeacherID = 2
+WHERE TeacherID = 1
+
 
 INSERT INTO Assignment(CourseID, AssignmentName, PossiblePoints, DueDate, AssignmentDescription)
 VALUES(1, 'Quiz 1', 25, '20150606', 'Variables quiz'),
@@ -98,30 +93,6 @@ SELECT *
 FROM LMSUser
 
 SELECT * 
-FROM RosterAssignment
+FROM COURSE
 
-INSERT INTO Roster (CourseID,UserID,CurrentGrade,IsDeleted)  --6/9 **RUN ME**
-VALUES (1,5,'C',0),
-(1,6,'B',0),
-(1,7,'C',0),
-(1,8,'A',0),
-(1,10,'B',0),
-(1,11,'C',0),
-(1,12,'C',0),
-(1,13,'B',0),
-(1,14,'A',0),
-(1,15,'B',0),
-(1,16,'C',0),
-(2,17,'B',0),
-(2,18,'A',0),
-(2,19,'B',0),
-(2,20,'C',0),
-(2,21,'C',0),
-(2,22,'B',0),
-(2,23,'C',0),
-(2,24,'B',0),
-(2,25,'C',0),
-(2,26,'C',0),
-(2,27,'F',0),
-(2,28,'C',0),
-(2,29,'C',0)
+

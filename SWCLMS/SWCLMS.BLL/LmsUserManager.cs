@@ -12,6 +12,7 @@ namespace SWCLMS.BLL
     public class LmsUserManager
     {
         private ILmsUserRepository _lmsUserRepository;
+        
 
         public LmsUserManager(ILmsUserRepository lmsUserRepository)
         {
@@ -51,5 +52,22 @@ namespace SWCLMS.BLL
 
             return response;
         }
+
+        public DataResponse<LmsUser> UpdateUserDetails(LmsUser user)
+        {
+            var response = new DataResponse<LmsUser>();
+
+            try
+            {
+                response.Data = _lmsUserRepository.UpdateUserDetails(user);
+                response.Success = true;
+            }
+            catch (Exception ex)
+            {
+                response.Message = "User not updated";
+            }
+
+            return response;
+        }                
     }
 }

@@ -7,10 +7,8 @@ using SWCLMS.Models.Tables;
 
 namespace SWCLMS.Models.Interfaces
 {
-    public interface ILmsUserRepository
+    public interface ILMSGradeLevelRepository
     {
-        List<LmsUser> GetUnassignedUsers();
-        LmsUser GetUnassignedUserDetails(int UserID);
-        LmsUser UpdateUserDetails(LmsUser user); //Void
+        List<GradeLevel> GradeLevelGetAll();
     }
 }

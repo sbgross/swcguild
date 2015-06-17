@@ -12,11 +12,11 @@ FROM LMSUser
 WHERE UserID = @UserID
 
 --------------------------------------------------------
-CREATE PROCEDURE UserUpdateDetails(
+ALTER PROCEDURE UserUpdateDetails --Updated: 06/12/2015 12:54pm--
+(
 @UserID int,
 @FirstName varchar(30),
 @LastName varchar(30),
-@SuggestedRole varchar(50) = null,
 @GradeLevelID tinyint = null)
 
 AS
@@ -24,10 +24,10 @@ AS
 UPDATE LMSUser SET
 FirstName = @FirstName,
 LastName = @LastName,
-SuggestedRole = @SuggestedRole,
 GradeLevelID = @GradeLevelID
 
 WHERE UserID = @UserID
+
 
 --------------------------------------------------------
 CREATE PROCEDURE UserSearch(

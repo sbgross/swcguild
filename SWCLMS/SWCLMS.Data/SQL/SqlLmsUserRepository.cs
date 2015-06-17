@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SWCLMS.Models;
 using SWCLMS.Models.Interfaces;
 using SWCLMS.Models.Tables;
 
@@ -18,7 +19,7 @@ namespace SWCLMS.Data.SQL
 
             using (var cn = new SqlConnection(Settings.GetConnectionString()))
             {
-                var cmd = new SqlCommand("AdministratorDashboardSlide2", cn);  //Name of Eric's sproc--AdministratorDashboard
+                var cmd = new SqlCommand("AdministratorDashboard", cn); 
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cn.Open();
@@ -28,7 +29,6 @@ namespace SWCLMS.Data.SQL
                     {
                         var user = new LmsUser();
                         user.UserID = (int)dr["UserID"];
-                        //user.Id = dr["ID"].ToString();
                         user.FirstName = dr["FirstName"].ToString();
                         user.LastName = dr["LastName"].ToString();
                         user.Email = dr["Email"].ToString();
@@ -59,8 +59,7 @@ namespace SWCLMS.Data.SQL
                 {
                     while (dr.Read())
                     {                        
-                        user.UserID = (int)dr["UserID"];
-                        //user.Id = dr["ID"].ToString();
+                        user.UserID = (int)dr["UserID"];                        
                         user.FirstName = dr["FirstName"].ToString();
                         user.LastName = dr["LastName"].ToString();
                         user.Email = dr["Email"].ToString();
@@ -72,6 +71,26 @@ namespace SWCLMS.Data.SQL
                 }
             }
             return user;
+        }
+
+        public LmsUser UpdateUserDetails(LmsUser user)
+        {
+            LmsUser user1 = new LmsUser();
+            using (var cn = new SqlConnection(Settings.GetConnectionString()))
+            {
+                var cmd = new SqlCommand("UserUpdateDetails", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@UserID", user.UserID);
+                cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
+                cmd.Parameters.AddWithValue("@LastName", user.LastName);
+                cmd.Parameters.AddWithValue("@GradeLevelID", user.GradeLevelID);
+
+                cn.Open();
+                cmd.ExecuteNonQuery();
+               
+            }
+
+            return user1;
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SWCLMS.Models;
 using SWCLMS.Models.Interfaces;
 using SWCLMS.Models.Tables;
 
@@ -64,6 +65,13 @@ namespace SWCLMS.Data.Mocks
             LmsUser user = new LmsUser();
           
             return user;
+        }
+
+        public LmsUser UpdateUserDetails(LmsUser user)
+        {
+          LmsUser user1 = new LmsUser();
+
+            return user1;
         }
     }
 }

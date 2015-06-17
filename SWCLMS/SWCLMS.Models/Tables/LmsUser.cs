@@ -16,8 +16,4 @@ namespace SWCLMS.Models.Tables
         public byte? GradeLevelID { get; set; }
         public string SuggestedRole { get; set; }
     }
-
-    
-
-    
 }

@@ -1,48 +1,62 @@
-﻿@model SWCLMS.Models.DataResponse<SWCLMS.Models.Tables.LmsUser>
+﻿@model SWCLMS.UI.Models.UserDetailsToEditVM
+
 
 @{
     ViewBag.Title = "Index";
 }
 
+
 <body>
     <h2>User Details</h2>
-
-
+    
     <div class="row">
         <div class="col-xs-12">
             @Html.ActionLink("search for users", "Search", "Admin")
         </div>
 
         <div>
-            @using (Html.BeginForm("Edit", "Admin", FormMethod.Post))
+            @using (Html.BeginForm("GetUserDetails", "Admin")) //, FormMethod.Post))
             {
-                @Html.HiddenFor(u => u.Data.UserID)
+                @Html.HiddenFor(u => u.UserDetailsToEdit.UserID)
                 <p>
                     <label>Last Name</label>
-                    @Html.TextBoxFor(u => u.Data.LastName)
+                    <p>@Html.TextBoxFor(u => u.UserDetailsToEdit.LastName)</p>
                 </p>
 
                 <p>
                     <label>First Name</label>
-                    @Html.TextBoxFor(u => u.Data.FirstName)
+                    <p>@Html.TextBoxFor(u => u.UserDetailsToEdit.FirstName)</p>                    
                 </p>
 
                 <p>
                     <label>Grade Level</label>
-                    @Html.TextBoxFor(u => u.Data.GradeLevelID)
+                    @Html.DropDownListFor(u => u.UserDetailsToEdit.GradeLevelID, Model.GradeLevels, new { @class = "form-control" })
                 </p>
 
                 <p>
                     <label>User Name</label>
-                    @Html.DisplayFor(u => u.Data.Email)
+                    <p>@Html.DisplayFor(u => u.UserDetailsToEdit.Email)</p>
                 </p>
 
                 <p>
                     <label>Suggested Role</label>
-                    @Html.DisplayFor(u => u.Data.SuggestedRole)
+                    <p>@Html.DisplayFor(u => u.UserDetailsToEdit.SuggestedRole)</p>
                 </p>
 
-                <button>Save</button>
+                <p>
+                    <label>Roles</label>
+                    <p>@Html.DisplayFor(u => u.UserDetailsToEdit.SuggestedRole)</p>
+                </p>
+                
+                <form action="">
+                    <input type="checkbox" name="role" value="Admin">Admin<br>
+                    <input type="checkbox" name="role" value="Teacher">Teacher<br>
+                    <input type="checkbox" name="role" value="Student">Student<br>
+                    <input type="checkbox" name="role" value="Parent">Parent<br>
+                </form>
+
+                @Html.ActionLink("cancel", "index", "admin")
+                <button class="btn btn-primary">Save</button>
             }
         </div>
     </div>

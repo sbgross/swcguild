@@ -209,7 +209,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506151527536_InitialCreate.cs" />
+    <Compile Include="Migrations\201506151527536_InitialCreate.Designer.cs">
+      <DependentUpon>201506151527536_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\UserDetailsToEditVM.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -286,6 +292,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\GetUserDetails.cshtml" />
+    <Content Include="Views\Admin\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -299,10 +306,19 @@
       <Project>{5b98cbee-0585-4c23-ae2b-aac2ce60a1e4}</Project>
       <Name>SWCLMS.BLL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SWCLMS.Data\SWCLMS.Data.csproj">
+      <Project>{9AD026D5-5017-4988-B285-8F7296E9DFD6}</Project>
+      <Name>SWCLMS.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SWCLMS.Models\SWCLMS.Models.csproj">
       <Project>{9c7df543-ffee-4b92-a34a-52cf71506a14}</Project>
       <Name>SWCLMS.Models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201506151527536_InitialCreate.resx">
+      <DependentUpon>201506151527536_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
