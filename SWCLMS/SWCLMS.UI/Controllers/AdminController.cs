@@ -32,27 +32,31 @@ namespace SWCLMS.UI.Controllers
         public ActionResult GetUserDetails(int ID)  //finished on 6/16 3:30pm
         {
             var gradeLevelRepo = new SqlLMSGradeLevelRepository();
-            var user = _lmsUserManager.GetUnassignedUserDetails(ID);
+            var user = _lmsUserManager.GetUnassignedUserDetails(ID);            
             UserDetailsToEditVM model = new UserDetailsToEditVM();
             model.UserDetailsToEdit = user.Data;
-            model.CreateGradeLevel(gradeLevelRepo.GradeLevelGetAll());
+            model.CreateGradeLevel(gradeLevelRepo.GradeLevelGetAll());            
 
             return View(model);
         }
         
         [HttpPost]
-        public ActionResult GetUserDetails(DataResponse<UserDetailsToEditVM> user) 
+        //public ActionResult GetUserDetails(DataResponse<UserDetailsToEditVM> user) 
+        public ActionResult GetUserDetails(UserDetailsToEditVM user) 
         {
-            _lmsUserManager.UpdateUserDetails(user.Data.UserDetailsToEdit);
+            //_lmsUserManager.UpdateUserDetails(user.Data.UserDetailsToEdit);
+            _lmsUserManager.UpdateUserDetails(user.UserDetailsToEdit);
 
             return RedirectToAction("Index", "Admin");
         }
-
-        //Allows Admins to search for users - both assigned and unassigned. 
-        //Created: 06/15/2015 Nikki computer
+        
         public ActionResult Search()
         {
-            return View();
+            var roleRepo = new SqlLMSRoleRepository();
+            UserDetailsToEditVM model = new UserDetailsToEditVM();
+            model.CreateRole(roleRepo.RoleGetAll());
+
+            return View(model);
         }
     }
 }

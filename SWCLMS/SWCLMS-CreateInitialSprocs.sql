@@ -245,3 +245,11 @@ FROM LMSUser
 WHERE UserID = @UserID AND FirstName = @FirstName AND LastName = @LastName AND Email = @Email
 AND SuggestedRole = @SuggestedRole AND GradeLevelID = @GradeLevelID
 
+
+CREATE PROCEDURE RoleGetAll  --6/17
+
+AS
+
+SELECT *
+FROM AspNetRoles
+

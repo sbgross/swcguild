@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LMSGradeLevelManager.cs" />
+    <Compile Include="LMSRoleManager.cs" />
     <Compile Include="LmsUserManager.cs" />
     <Compile Include="BLLNinjectModules.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

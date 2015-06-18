@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="DataResponse.cs" />
     <Compile Include="Interfaces\ILMSGradeLevelRepository.cs" />
+    <Compile Include="Interfaces\ILMSRoleRepository.cs" />
     <Compile Include="Interfaces\ILmsUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Response.cs" />
@@ -48,6 +49,7 @@
     <Compile Include="Tables\Course.cs" />
     <Compile Include="Tables\GradeLevel.cs" />
     <Compile Include="Tables\LmsUser.cs" />
+    <Compile Include="Tables\Role.cs" />
     <Compile Include="Tables\Roster.cs" />
     <Compile Include="Tables\RosterAssignment.cs" />
     <Compile Include="Tables\StudentGuardian.cs" />

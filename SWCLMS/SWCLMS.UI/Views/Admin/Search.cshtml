@@ -1,5 +1,5 @@
 ﻿@*Created 06/15/2015 Nikki's Computer*@
-@model SWCLMS.Models.DataResponse<SWCLMS.Models.Tables.LmsUser>
+@model SWCLMS.UI.Models.UserDetailsToEditVM
 @{
     ViewBag.Title = "Search";
 }
@@ -8,27 +8,26 @@
     <div class="row">
         @using (Html.BeginForm("Search", "Admin"))
         {
-            @Html.HiddenFor(u => u.Data.UserID)
+            @Html.HiddenFor(u => u.UserDetailsToEdit.UserID)
             <p>
                 <div class="col-md-2">
-                    @Html.TextBoxFor(u => u.Data.LastName, new { @class = "form-control", placeholder = "Last name"})
+                    @Html.TextBoxFor(u => u.UserDetailsToEdit.LastName, new { @class = "form-control", placeholder = "Last name" })
                 </div>
 
                 <div class="col-md-2">
-                    @Html.TextBoxFor(u => u.Data.FirstName, new { @class = "form-control", placeholder = "First name" })
+                    @Html.TextBoxFor(u => u.UserDetailsToEdit.FirstName, new { @class = "form-control", placeholder = "First name" })
                 </div>
 
                 <div class="col-md-2">
-                    @Html.TextBoxFor(u => u.Data.Email, new { @class = "form-control", placeholder = "Email"})
+                    @Html.TextBoxFor(u => u.UserDetailsToEdit.Email, new { @class = "form-control", placeholder = "Email" })
                 </div>
 
-                <div class="col-md-2">
-                    <label>Role</label> @*this is a placeholder for the dropdown*@
-                    @*@Html.DropDownList(u => u.Data.SuggestedRole)*@
+                <div class="col-md-2">                    
+                    @Html.DropDownListFor(u => u.RoleFields.RoleID, Model.Roles, new { @class = "form-control", placeholder = "Role" })
                 </div>
 
                 <button>Search</button>
-</p>
+            </p>
         }
     </div>
 </body>
