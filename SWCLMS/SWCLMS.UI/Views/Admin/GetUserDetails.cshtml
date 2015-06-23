@@ -2,65 +2,61 @@
 
 
 @{
-    ViewBag.Title = "Index";
-}
-
-
-<body>
-    <h2>User Details</h2>
+    ViewBag.Title = "GetUserDetails";
+}    
     
-    <div class="row">
-        <div class="col-xs-12">
-            @Html.ActionLink("search for users", "Search", "Admin")
-        </div>
+<div class="row">
+    <div class="col-xs-12 col-sm-6">
+        <h2>User Details</h2>
+        @using (Html.BeginForm("GetUserDetails", "Admin"))
+        {
+            @Html.HiddenFor(u => u.UserDetailsToEdit.UserID)
+            <div class="form-group">
+                <label>Last Name</label>
+                <p>@Html.TextBoxFor(u => u.UserDetailsToEdit.LastName)</p>
+            </div>
 
-        <div>
-            @using (Html.BeginForm("GetUserDetails", "Admin")) //, FormMethod.Post))
-            {
-                @Html.HiddenFor(u => u.UserDetailsToEdit.UserID)
-                <p>
-                    <label>Last Name</label>
-                    <p>@Html.TextBoxFor(u => u.UserDetailsToEdit.LastName)</p>
+            <div class="form-group">
+                <label>First Name</label>
+                <p>@Html.TextBoxFor(u => u.UserDetailsToEdit.FirstName)</p>                    
+            </div>
+
+            <div class ="form-group">
+                <label>Grade Level</label>
+                @Html.DropDownListFor(u => u.UserDetailsToEdit.GradeLevelID, Model.GradeLevels, "N/A", new { @class = "form-control" })
+            </div>
+
+            <div class ="form-group">
+                <label>User Name</label>
+                <p>@Html.DisplayFor(u => u.UserDetailsToEdit.Email)</p>
+            </div>
+
+            <div class ="form-group">
+                <label>Suggested Role</label>
+                <p>@Html.DisplayFor(u => u.UserDetailsToEdit.SuggestedRole)</p>
+            </div>
+
+            <div class="form-group">
+                <label>Roles</label>
+                <p>@for (int i = 0; i < Model.SelectedRoles.Count; i++)
+                    {
+                        <p>
+                            @Html.CheckBoxFor(m=>m.SelectedRoles[i].CheckedStatus)
+                            <span>@Model.SelectedRoles[i].RoleName</span>
+                            @Html.HiddenFor(m=>m.SelectedRoles[i].RoleName)
+                            @Html.HiddenFor(m=>m.SelectedRoles[i].RoleID)
+                        </p>
+                    }
+                    @*@foreach (var r in Model.Roles)
+                    {
+                        
+                        <span>@r.Text</span>
+                    }*@
                 </p>
+            </div>
 
-                <p>
-                    <label>First Name</label>
-                    <p>@Html.TextBoxFor(u => u.UserDetailsToEdit.FirstName)</p>                    
-                </p>
-
-                <p>
-                    <label>Grade Level</label>
-                    @Html.DropDownListFor(u => u.UserDetailsToEdit.GradeLevelID, Model.GradeLevels, new { @class = "form-control" })
-                </p>
-
-                <p>
-                    <label>User Name</label>
-                    <p>@Html.DisplayFor(u => u.UserDetailsToEdit.Email)</p>
-                </p>
-
-                <p>
-                    <label>Suggested Role</label>
-                    <p>@Html.DisplayFor(u => u.UserDetailsToEdit.SuggestedRole)</p>
-                </p>
-
-                <p>
-                    <label>Roles</label>
-                </p>
-
-                @*<p>                    
-                    @Html.CheckBoxFor()           
-                </p>*@
-
-            @*<form action="">
-                    <input type="radio" name="role" value="Admin">Admin<br>
-                    <input type="radio" name="role" value="Teacher">Teacher<br>
-                    <input type="radio" name="role" value="Student">Student<br>
-                    <input type="radio" name="role" value="Parent">Parent<br>
-                </form>*@
-
-                @Html.ActionLink("cancel", "index", "admin")
-                <button class="btn btn-primary">Save</button>
-            }
-        </div>
+            @Html.ActionLink("cancel", "index", "admin")
+            <button class="btn btn-primary">Save</button>
+        }
     </div>
-</body>
+</div>

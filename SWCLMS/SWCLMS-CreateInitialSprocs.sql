@@ -2,14 +2,21 @@ USE SWC_LMS
 GO
 
 --------------------------------------------------------
-ALTER PROCEDURE UserViewDetails  (  --6/12 Slide #4 **DONE**
-@UserID int)
+ALTER PROCEDURE UserViewDetails  (
+@UserID INT)
  
 AS
  
-Select UserId, LastName, FirstName, GradeLevelID,Email, SuggestedRole --NEED ROLES
+Select LMSUser.UserID, LastName, FirstName, GradeLevelID, Email, SuggestedRole, AspNetRoles.Name, AspNetRoles.Id, AspNetUserRoles.UserId, AspNetUserRoles.RoleId
 FROM LMSUser
-WHERE UserID = @UserID
+	FULL OUTER JOIN AspNetUserRoles ON LMSUser.ID = AspNetUserRoles.UserId
+	FULL OUTER JOIN AspNetRoles ON AspNetUserRoles.RoleId = AspNetRoles.Id 
+WHERE LMSUser.UserID = @UserID
+
+EXECUTE UserViewDetails
+
+SELECT *
+FROM LMSUser
 
 --------------------------------------------------------
 ALTER PROCEDURE UserUpdateDetails --Updated: 06/12/2015 12:54pm--
@@ -17,30 +24,45 @@ ALTER PROCEDURE UserUpdateDetails --Updated: 06/12/2015 12:54pm--
 @UserID int,
 @FirstName varchar(30),
 @LastName varchar(30),
-@GradeLevelID tinyint = null)
-
+@GradeLevelID tinyint = null,
+@ID varchar(128) = null
+)
 AS
 
 UPDATE LMSUser SET
 FirstName = @FirstName,
 LastName = @LastName,
-GradeLevelID = @GradeLevelID
+GradeLevelID = @GradeLevelID,
+ID = @ID
 
 WHERE UserID = @UserID
 
 
 --------------------------------------------------------
-CREATE PROCEDURE UserSearch(
-@UserID int,
-@FirstNamePartial varchar(30) = Null,
+ALTER PROCEDURE UserSearch(
+--@UserID int,
 @LastNamePartial varchar(30) = Null,
-@EmailPartial varchar(50) = Null)
+@FirstNamePartial varchar(30) = Null,
+@EmailPartial varchar(50) = Null,
+@RoleName varchar(256) = Null)
 
 AS 
 
-SELECT LastName, FirstName, Email --Should ID go in here eventually?
+SELECT LastName, FirstName, Email, AspNetRoles.Name, AspNetUserRoles.UserId,AspNetRoles.Id, GradeLevelID 
 FROM  LMSUser
-WHERE LastName LIKE @LastNamePartial OR FirstName LIKE @FirstNamePartial OR Email LIKE @EmailPartial
+FULL OUTER JOIN AspNetUserRoles ON LMSUser.ID = AspNetUserRoles.UserId
+FULL OUTER JOIN AspNetRoles ON AspNetUserRoles.RoleId = AspNetRoles.Id 
+WHERE 
+(LMSUser.ID IS NULL OR LMSUser.ID LIKE '%')
+AND (@LastNamePartial IS NULL OR LastName LIKE '@LastNamePartial%')
+AND (@FirstNamePartial IS NULL OR FirstName LIKE '@FirstNamePartial%')
+AND (@EmailPartial IS NULL OR Email LIKE '@EmailPartial%')
+
+execute UserSearch
+
+select *
+from LMSUser
+
 
 --------------------------------------------------------
 CREATE PROCEDURE UserStudentDashboard(
@@ -251,5 +273,27 @@ CREATE PROCEDURE RoleGetAll  --6/17
 AS
 
 SELECT *
-FROM AspNetRoles
+FROM LMSUser
+
+CREATE PROCEDURE LMSUserSelectRoleNames
+	@UserID int
+
+AS
+
+SELECT LMSUser.UserID, LMSUser.ID, FirstName, LastName, LMSUser.Email, SuggestedRole, GradeLevelID
+FROM LMSUser
+	INNER JOIN AspNetUsers ON LMSUser.ID = AspNetUsers.Id
+	INNER JOIN AspNetUserRoles ON AspNetUsers.Id = AspNetUserRoles.UserId
+	INNER JOIN AspNetRoles ON AspNetUserRoles.RoleId = AspNetRoles.Id
+WHERE LMSUser.UserId = @UserID
+
+CREATE PROCEDURE LMSUserSelectUnassigned
+
+AS
+
+SELECT *
+FROM LMSUser U
+	INNER JOIN AspNetUsers ON U.ID = AspNetUsers.Id
+	LEFT JOIN AspNetUserRoles ON AspNetUsers.Id = AspNetUserRoles.UserId
+WHERE AspNetUserRoles.UserId IS NULL
 

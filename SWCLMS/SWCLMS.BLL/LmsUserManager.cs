@@ -36,7 +36,7 @@ namespace SWCLMS.BLL
             return response;
         }
 
-        public DataResponse<LmsUser>GetUnassignedUserDetails(int UserID)
+        public DataResponse<LmsUser> GetUnassignedUserDetails(int UserID)
         {
             var response = new DataResponse<LmsUser>();
 
@@ -68,6 +68,6 @@ namespace SWCLMS.BLL
             }
 
             return response;
-        }                
+        }       
     }
 }

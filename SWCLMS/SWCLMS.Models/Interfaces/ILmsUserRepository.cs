@@ -12,5 +12,6 @@ namespace SWCLMS.Models.Interfaces
         List<LmsUser> GetUnassignedUsers();
         LmsUser GetUnassignedUserDetails(int UserID);
         LmsUser UpdateUserDetails(LmsUser user); //Void
+        //List<string> GetRoleNames(int UserID);
     }
 }

@@ -66,10 +66,13 @@ namespace SWCLMS.Data.SQL
                         user.SuggestedRole = dr["SuggestedRole"].ToString();
 
                         if (dr["GradeLevelID"] != DBNull.Value)
-                            user.GradeLevelID = (byte)dr["GradeLevelID"];                       
+                            user.GradeLevelID = (byte)dr["GradeLevelID"];
+
+                        if (dr["ID"] != DBNull.Value)
+                            user.ID= dr["ID"].ToString();
                     }
                 }
-            }
+            } 
             return user;
         }
 
@@ -84,6 +87,7 @@ namespace SWCLMS.Data.SQL
                 cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
                 cmd.Parameters.AddWithValue("@LastName", user.LastName);
                 cmd.Parameters.AddWithValue("@GradeLevelID", user.GradeLevelID);
+                cmd.Parameters.AddWithValue("@ID", user.ID);
 
                 cn.Open();
                 cmd.ExecuteNonQuery();

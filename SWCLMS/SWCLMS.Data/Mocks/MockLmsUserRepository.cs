@@ -24,7 +24,7 @@ namespace SWCLMS.Data.Mocks
                     LastName = "Wise",
                     SuggestedRole = "Admin",
                     GradeLevelID = null,
-                    Id = "1",
+                    ID = "1",
                     UserID = 1
                 },
                 new LmsUser()
@@ -34,7 +34,7 @@ namespace SWCLMS.Data.Mocks
                     LastName = "Lincoln",
                     SuggestedRole = "Teacher",
                     GradeLevelID = null,
-                    Id = "2",
+                    ID = "2",
                     UserID = 2
                 },
                 new LmsUser()
@@ -44,7 +44,7 @@ namespace SWCLMS.Data.Mocks
                     LastName = "Schmoe",
                     SuggestedRole = "Student",
                     GradeLevelID = null,
-                    Id = "3",
+                    ID = "3",
                     UserID = 3
                 },
                 new LmsUser()
@@ -54,7 +54,7 @@ namespace SWCLMS.Data.Mocks
                     LastName = "Schmoe",
                     SuggestedRole = "Parent",
                     GradeLevelID = null,
-                    Id = "4",
+                    ID = "4",
                     UserID = 4
                 }
             };
@@ -69,9 +69,15 @@ namespace SWCLMS.Data.Mocks
 
         public LmsUser UpdateUserDetails(LmsUser user)
         {
-          LmsUser user1 = new LmsUser();
+            LmsUser user1 = new LmsUser();
 
             return user1;
+        }
+
+        public List<string> GetRoleNames(int UserID)
+        {
+            List<string> roles = new List<string>();
+            return roles;
         }
     }
 }
