@@ -49,14 +49,14 @@ namespace SWCLMS.UI.Controllers
         {
             _lmsUserManager.UpdateUserDetails(user.UserDetailsToEdit);
 
-            foreach (var roleSelection in user.SelectedRoles)
-            {
-                if (roleSelection.CheckedStatus)
-                {
-                    //Request.RoleNames.Add(roleSelection.RoleName);
-                    _lms
-                }
-            }
+            //foreach (var roleSelection in user.SelectedRoles)
+            //{
+            //    if (roleSelection.CheckedStatus)
+            //    {
+            //        //Request.RoleNames.Add(roleSelection.RoleName);
+            //        //_lms
+            //    }
+            //}
 
             return RedirectToAction("Index", "Admin");
         }            

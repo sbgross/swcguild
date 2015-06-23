@@ -87,7 +87,7 @@ namespace SWCLMS.Data.SQL
                 cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
                 cmd.Parameters.AddWithValue("@LastName", user.LastName);
                 cmd.Parameters.AddWithValue("@GradeLevelID", user.GradeLevelID);
-                cmd.Parameters.AddWithValue("@ID", user.ID);
+                //cmd.Parameters.AddWithValue("@ID", user.ID);
 
                 cn.Open();
                 cmd.ExecuteNonQuery();

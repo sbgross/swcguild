@@ -23,7 +23,7 @@ namespace SWCLMS.BLL
             using (var transactionScope = new TransactionScope())
             {
                 _lmsRoleRepository.RemoveRoles(request.ID);
-                _lmsRoleRepository.Update(request);
+                //_lmsRoleRepository.Update(request);
 
                 foreach (var role in request.RoleNames)
                 {

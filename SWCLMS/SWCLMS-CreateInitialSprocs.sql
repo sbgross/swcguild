@@ -294,6 +294,35 @@ AS
 SELECT *
 FROM LMSUser U
 	INNER JOIN AspNetUsers ON U.ID = AspNetUsers.Id
-	LEFT JOIN AspNetUserRoles ON AspNetUsers.Id = AspNetUserRoles.UserId
+	LEFT JOIN  ON AspNetUsers.Id = AspNetUserRoles.UserId
 WHERE AspNetUserRoles.UserId IS NULL
+
+--------------------------------------------------------
+CREATE PROCEDURE AspNetUserDeleteRoles
+@Id nvarchar(128)
+
+AS
+
+DELETE FROM AspNetUserRoles WHERE UserId = @Id;
+
+--------------------------------------------------------
+CREATE PROCEDURE AspNetUserAddRole
+@UserId nvarchar(128),
+@Name nvarchar(256)
+
+AS
+
+INSERT INTO AspNetUserRoles (UserId, RoleId)
+SELECT @UserId, Id AS RoleId
+FROM AspNetRoles
+WHERE Name = @Name;
+
+--------------------------------------------------------
+
+
+
+
+
+
+
 
