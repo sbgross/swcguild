@@ -16,7 +16,7 @@ namespace SWCLMS.UI.Migrations
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(SWCLMS.UI.Models.ApplicationDbContext context)
+      protected override void Seed(SWCLMS.UI.Models.ApplicationDbContext context)
         {
             var userMgr = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             var roleMgr = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
@@ -93,5 +93,5 @@ namespace SWCLMS.UI.Migrations
             roleMgr.Create(new IdentityRole("Parent"));
             roleMgr.Create(new IdentityRole("Student"));
         }
-    }    
-}
+    }
+    }

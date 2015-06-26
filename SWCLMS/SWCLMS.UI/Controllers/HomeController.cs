@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
+using Microsoft.AspNet.Identity;
+using SWCLMS.BLL;
+using SWCLMS.Data.SQL;
+using SWCLMS.UI.Models;
 
 namespace SWCLMS.UI.Controllers
 {
@@ -10,9 +15,36 @@ namespace SWCLMS.UI.Controllers
     {
         public ActionResult Index()
         {
-            return View();
-        }
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Admin"))
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+                if (User.IsInRole("Teacher"))
+                {
+                    return RedirectToAction("Index", "Teacher");
+                }
+                if (User.IsInRole("Student"))
+                {
+                    return RedirectToAction("Index", "Student");
+                }
+                if (User.IsInRole("Parent"))
+                {
+                    return RedirectToAction("Index", "Parent");
+                }
 
+                return RedirectToAction("NotApprovedYet", "Home");
+            }
+
+            var gradeLevelRepo = new SqlLMSGradeLevelRepository();
+            var model = new LoginRegistrationVM();            
+            model.RegisterViewModel.CreateGradeLevel(gradeLevelRepo.GradeLevelGetAll());
+            model.RegisterViewModel.PopulateSelectListItems();
+
+            return View(model);
+        }
+       
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -25,6 +57,12 @@ namespace SWCLMS.UI.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ActionResult NotApprovedYet()
+        {
+            return View();
+
         }
     }
 }

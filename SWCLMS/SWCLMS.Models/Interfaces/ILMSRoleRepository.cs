@@ -7,12 +7,14 @@ using SWCLMS.Models.Tables;
 
 namespace SWCLMS.Models.Interfaces
 {
-    public interface ILMSRoleRepository
+    public interface ILmsRoleRepository
     {
         List<Role> RoleGetAll();
-        List<UserRole> UserGetAllRoles(int UserID);
+        List<LMSUserUpdateRequest> UserGetAllRoles(int UserID);
 
         void RemoveRoles(string aspNetUserId);
         void AddRole(string aspNetUserId, string roleName);
     }
+    
 }
+

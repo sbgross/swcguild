@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Activities.Statements;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,28 +11,28 @@ using System.Transactions;
 namespace SWCLMS.BLL
 {
     public class LMSRoleManager
-    {
-        private ILMSRoleRepository _lmsRoleRepository;
-
-        public LMSRoleManager(ILMSRoleRepository lmsRoleRepository)
         {
-            _lmsRoleRepository = lmsRoleRepository;
-        }
+            private ILmsRoleRepository _lmsRoleRepository;
 
-        public void Update(UserRole request)
-        {
-            using (var transactionScope = new TransactionScope())
+            public LMSRoleManager(ILmsRoleRepository lmsRoleRepository)
             {
-                _lmsRoleRepository.RemoveRoles(request.ID);
-                //_lmsRoleRepository.Update(request);
+                _lmsRoleRepository = lmsRoleRepository;
+            }
 
-                foreach (var role in request.RoleNames)
+            public void UpdateRoles(LMSUserUpdateRequest request)
+            {
+                using (var transactionScope = new System.Transactions.TransactionScope())
                 {
-                    _lmsRoleRepository.AddRole(request.ID, role);
-                }
+                    _lmsRoleRepository.RemoveRoles(request.ID);                    
 
-                transactionScope.Complete();
+                    foreach (var role in request.RoleNames)
+                    {
+                        _lmsRoleRepository.AddRole(request.ID, role);
+                    }
+
+                    transactionScope.Complete();
+                }
             }
         }
     }
-}
+

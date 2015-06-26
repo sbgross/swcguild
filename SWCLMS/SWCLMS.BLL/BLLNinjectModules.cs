@@ -16,7 +16,8 @@ namespace SWCLMS.BLL
         public override void Load()
         {
             Bind<ILmsUserRepository>().To<MockLmsUserRepository>();
-            //Bind<ILMSGradeLevelRepository>().To<MockLMSGradeLevelRepository>();
+            Bind<ILmsRoleRepository>().To<MockLmsRoleRepository>();
+            Bind<ILmsStudentCourseRepository>().To<MockLmsStudentCourseRepository>();
         }
     }
 
@@ -25,8 +26,8 @@ namespace SWCLMS.BLL
         public override void Load()
         {
             Bind<ILmsUserRepository>().To<SqlLmsUserRepository>();
-            Bind<ILMSGradeLevelRepository>().To<SqlLMSGradeLevelRepository>();
-            Bind<ILMSRoleRepository>().To<SqlLMSRoleRepository>();
+            Bind<ILmsRoleRepository>().To<SqlLmsRoleRepository>();
+            Bind<ILmsStudentCourseRepository>().To<SqlLmsStudentCourseRepository>();
         }
     }
 
