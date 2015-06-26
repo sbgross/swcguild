@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mime;
 using System.Web;
 using SWCLMS.Models.Tables;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace SWCLMS.UI.Models
 {
@@ -20,8 +20,8 @@ namespace SWCLMS.UI.Models
 
         public List<SelectListItem> GradeLevels { get; set; }
         public List<SelectListItem> Roles { get; set; }
-        public List<UserRoleSelection> SelectedRoles { get; set; }       
-        public List<string> UserAllRoles { get; set; }     
+        public List<UserRoleSelection> SelectedRoles { get; set; }
+        public List<string> UserAllRoles { get; set; }
 
         public void PopulateRolesCheckbox(List<string> UserAllRoles)
         {
@@ -33,7 +33,7 @@ namespace SWCLMS.UI.Models
                 new UserRoleSelection() {RoleName = "Parent", CheckedStatus = UserAllRoles.Contains("Parent")}
             };
         }
-            
+
         public void CreateGradeLevel(List<GradeLevel> gradeLevels)
         {
             GradeLevels = new List<SelectListItem>();
@@ -48,17 +48,17 @@ namespace SWCLMS.UI.Models
 
         public void CreateRole(List<Role> roles)
         {
-            Roles = new List<SelectListItem>();        
+            Roles = new List<SelectListItem>();
 
             foreach (var r in roles)
             {
                 Roles.Add(
-                    new SelectListItem() { Text = r.RoleName, Value = r.RoleID}
-                    );             
+                    new SelectListItem() { Text = r.RoleName, Value = r.RoleID }
+                    );
             }
         }
 
-        public List<string> CreateUserRoleList(List<UserRole> roles)
+        public List<string> CreateUserRoleList(List<LMSUserUpdateRequest> roles)
         {
             UserAllRoles = new List<string>();
 
@@ -70,6 +70,8 @@ namespace SWCLMS.UI.Models
             }
 
             return UserAllRoles;
-        }     
+        }
     }
+
 }
+

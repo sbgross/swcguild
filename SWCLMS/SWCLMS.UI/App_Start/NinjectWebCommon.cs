@@ -78,6 +78,8 @@ namespace SWCLMS.UI.App_Start
             kernel.Bind<IAuthenticationManager>().ToMethod(m => HttpContext.Current.GetOwinContext().Authentication);
             kernel.Bind<IUserStore<ApplicationUser>>().To<UserStore<ApplicationUser>>();
             kernel.Bind<System.Data.Entity.DbContext>().To(typeof(ApplicationDbContext));
-        }        
+        }       
+ 
+
     }
 }

@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 using SWCLMS.Models.Interfaces;
 using SWCLMS.Models.Tables;
 
+
 namespace SWCLMS.Data.SQL
 {
-    public class SqlLMSRoleRepository : ILMSRoleRepository
+    public class SqlLmsRoleRepository : ILmsRoleRepository
     {
         public List<Role> RoleGetAll()
         {
@@ -26,9 +27,9 @@ namespace SWCLMS.Data.SQL
                 {
                     while (dr.Read())
                     {
-                        var role = new Role();                       
+                        var role = new Role();
                         role.RoleID = dr["ID"].ToString();
-                        role.RoleName= dr["Name"].ToString();
+                        role.RoleName = dr["Name"].ToString();
 
                         roles.Add(role);
                     }
@@ -37,9 +38,10 @@ namespace SWCLMS.Data.SQL
             return roles;
         }
 
-        public List<UserRole> UserGetAllRoles(int UserID)
+
+        public List<LMSUserUpdateRequest> UserGetAllRoles(int UserID)
         {
-            List<UserRole> users = new List<UserRole>();
+            List<LMSUserUpdateRequest> users = new List<LMSUserUpdateRequest>();
 
             using (var cn = new SqlConnection(Settings.GetConnectionString()))
             {
@@ -52,8 +54,8 @@ namespace SWCLMS.Data.SQL
                 {
                     while (dr.Read())
                     {
-                        var user = new UserRole();
-                        user.UserID = (int)dr["UserID"];
+                        var user = new LMSUserUpdateRequest();
+                        user.UserID = (int) dr["UserID"];
                         user.ID = dr["ID"].ToString();
                         user.FirstName = dr["FirstName"].ToString();
                         user.LastName = dr["LastName"].ToString();
@@ -70,31 +72,22 @@ namespace SWCLMS.Data.SQL
 
         public void RemoveRoles(string aspNetUserId)
         {
-            List<UserRole> users = new List<UserRole>();
+            List<LMSUserUpdateRequest> users = new List<LMSUserUpdateRequest>();
             using (var cn = new SqlConnection(Settings.GetConnectionString()))
-            {
+            {                
                 var cmd = new SqlCommand("AspNetUserDeleteRoles", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Id", aspNetUserId);
+                cmd.Parameters.AddWithValue("@Id",aspNetUserId);
 
                 cn.Open();
-                using (var dr = cmd.ExecuteReader())
-                {
-                    while (dr.Read())
-                    {
-                        var user = new UserRole();                       
-                        user.RoleID = dr["UserId"].ToString();
-                        user.RoleName = dr["RoleId"].ToString();
+                cmd.ExecuteNonQuery();
 
-                        users.Add(user);
-                    }
-                }
             }
         }
 
         public void AddRole(string aspNetUserId, string roleName)
         {
-            UserRole user = new UserRole();
+            LMSUserUpdateRequest user = new LMSUserUpdateRequest();
             using (var cn = new SqlConnection(Settings.GetConnectionString()))
             {
                 var cmd = new SqlCommand("AspNetUserAddRole", cn);

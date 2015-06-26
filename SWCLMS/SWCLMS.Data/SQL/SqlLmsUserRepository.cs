@@ -19,7 +19,7 @@ namespace SWCLMS.Data.SQL
 
             using (var cn = new SqlConnection(Settings.GetConnectionString()))
             {
-                var cmd = new SqlCommand("AdministratorDashboard", cn); 
+                var cmd = new SqlCommand("LMSUserSelectUnassigned", cn);  //Name of Eric's sproc--AdministratorDashboard
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cn.Open();
@@ -29,6 +29,7 @@ namespace SWCLMS.Data.SQL
                     {
                         var user = new LmsUser();
                         user.UserID = (int)dr["UserID"];
+                        //user.Id = dr["ID"].ToString();
                         user.FirstName = dr["FirstName"].ToString();
                         user.LastName = dr["LastName"].ToString();
                         user.Email = dr["Email"].ToString();
@@ -44,7 +45,7 @@ namespace SWCLMS.Data.SQL
             return users;
         }
 
-        public LmsUser GetUnassignedUserDetails(int UserID)
+        public LmsUser GetUnassignedUserDetails(int UserID)  
         {           
             LmsUser user = new LmsUser();
 
@@ -59,24 +60,22 @@ namespace SWCLMS.Data.SQL
                 {
                     while (dr.Read())
                     {                        
-                        user.UserID = (int)dr["UserID"];                        
+                        user.UserID = (int)dr["UserID"];
+                        user.ID = dr["ID"].ToString();
                         user.FirstName = dr["FirstName"].ToString();
                         user.LastName = dr["LastName"].ToString();
                         user.Email = dr["Email"].ToString();
                         user.SuggestedRole = dr["SuggestedRole"].ToString();
 
                         if (dr["GradeLevelID"] != DBNull.Value)
-                            user.GradeLevelID = (byte)dr["GradeLevelID"];
-
-                        if (dr["ID"] != DBNull.Value)
-                            user.ID= dr["ID"].ToString();
+                            user.GradeLevelID = (byte)dr["GradeLevelID"];                       
                     }
                 }
-            } 
+            }
             return user;
         }
 
-        public LmsUser UpdateUserDetails(LmsUser user)
+        public LmsUser UpdateUserDetails(LMSUserUpdateRequest user)
         {
             LmsUser user1 = new LmsUser();
             using (var cn = new SqlConnection(Settings.GetConnectionString()))
@@ -84,17 +83,55 @@ namespace SWCLMS.Data.SQL
                 var cmd = new SqlCommand("UserUpdateDetails", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@UserID", user.UserID);
+                cmd.Parameters.AddWithValue("@ID", user.ID);
                 cmd.Parameters.AddWithValue("@FirstName", user.FirstName);
                 cmd.Parameters.AddWithValue("@LastName", user.LastName);
-                cmd.Parameters.AddWithValue("@GradeLevelID", user.GradeLevelID);
-                //cmd.Parameters.AddWithValue("@ID", user.ID);
+                cmd.Parameters.AddWithValue("@GradeLevelID", user.GradeLevelID);                  
 
                 cn.Open();
-                cmd.ExecuteNonQuery();
-               
+                cmd.ExecuteNonQuery();               
             }
 
             return user1;
+        }
+
+        public List<LmsUser> UserSearch(AdminUserSearch searchName)
+        {
+            List<LmsUser> users = new List<LmsUser>();
+
+            using (var cn = new SqlConnection(Settings.GetConnectionString()))
+            {
+                var cmd = new SqlCommand("UserSearch", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                if (!string.IsNullOrEmpty(searchName.FirstName))
+                    cmd.Parameters.Add(new SqlParameter("@FirstNamePartial", searchName.FirstName));
+
+                if (!string.IsNullOrEmpty(searchName.LastName))
+                    cmd.Parameters.Add(new SqlParameter("@LastNamePartial", searchName.LastName));
+
+                if (!string.IsNullOrEmpty(searchName.Email))
+                    cmd.Parameters.Add(new SqlParameter("@EmailPartial", searchName.Email));
+
+                if (!string.IsNullOrEmpty(searchName.SelectedRoleID))
+                    cmd.Parameters.Add(new SqlParameter("@RoleID", searchName.SelectedRoleID));
+
+                cn.Open();
+                using (var dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        var user = new LmsUser();
+                        user.UserID = (int)dr["UserID"];
+                        user.FirstName = dr["FirstName"].ToString();
+                        user.LastName = dr["LastName"].ToString();
+                        user.Email = dr["Email"].ToString();
+
+                        users.Add(user);
+                    }
+                }
+            }
+            return users;
         }
     }
 }

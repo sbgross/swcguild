@@ -67,17 +67,25 @@ namespace SWCLMS.Data.Mocks
             return user;
         }
 
-        public LmsUser UpdateUserDetails(LmsUser user)
+        public LmsUser UpdateUserDetails(LMSUserUpdateRequest user)
         {
             LmsUser user1 = new LmsUser();
 
             return user1;
         }
 
-        public List<string> GetRoleNames(int UserID)
+        public LmsUser UpdateUserDetails(LmsUser user)
         {
-            List<string> roles = new List<string>();
-            return roles;
+          LmsUser user1 = new LmsUser();
+
+            return user1;
         }
+
+        public List<LmsUser> UserSearch(AdminUserSearch searchName)
+        {
+            List<LmsUser> user2 = new List<LmsUser>();
+
+            return user2;
+        } 
     }
 }

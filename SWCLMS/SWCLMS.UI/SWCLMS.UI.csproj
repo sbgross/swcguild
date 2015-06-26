@@ -206,21 +206,27 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ParentController.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201506151527536_InitialCreate.cs" />
-    <Compile Include="Migrations\201506151527536_InitialCreate.Designer.cs">
-      <DependentUpon>201506151527536_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201506151527495_InitialCreate.cs" />
+    <Compile Include="Migrations\201506151527495_InitialCreate.Designer.cs">
+      <DependentUpon>201506151527495_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\LoginRegistrationVM.cs" />
+    <Compile Include="Models\StudentDashboardVM.cs" />
     <Compile Include="Models\UserDetailsToEditVM.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\UserRoleSelection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utilities\SelectListItemCreator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -294,6 +300,11 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\GetUserDetails.cshtml" />
     <Content Include="Views\Admin\Search.cshtml" />
+    <Content Include="Views\Teacher\Index.cshtml" />
+    <Content Include="Views\Student\Index.cshtml" />
+    <Content Include="Views\Parent\Index.cshtml" />
+    <Content Include="Views\Home\NotApprovedYet.cshtml" />
+    <Content Include="Views\Student\ViewGrades.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -308,7 +319,7 @@
       <Name>SWCLMS.BLL</Name>
     </ProjectReference>
     <ProjectReference Include="..\SWCLMS.Data\SWCLMS.Data.csproj">
-      <Project>{9AD026D5-5017-4988-B285-8F7296E9DFD6}</Project>
+      <Project>{9ad026d5-5017-4988-b285-8f7296e9dfd6}</Project>
       <Name>SWCLMS.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\SWCLMS.Models\SWCLMS.Models.csproj">
@@ -317,8 +328,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201506151527536_InitialCreate.resx">
-      <DependentUpon>201506151527536_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201506151527495_InitialCreate.resx">
+      <DependentUpon>201506151527495_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -18,7 +18,7 @@ namespace SWCLMS.Data.SQL
 
             using (var cn = new SqlConnection(Settings.GetConnectionString()))
             {
-                var cmd = new SqlCommand("GradeLevelGetAll", cn);
+                var cmd = new SqlCommand("GradeLevelGetAll", cn);  //Name of Eric's sproc--AdministratorDashboard
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cn.Open();
@@ -26,11 +26,12 @@ namespace SWCLMS.Data.SQL
                 {
                     while (dr.Read())
                     {
-                        var gradeLevel = new GradeLevel();                       
+                        var gradeLevel = new GradeLevel();
+                        //user.GradeLevelID = (int)dr["GradeLevelID"];
                         if (dr["GradeLevelID"] != DBNull.Value)
                             gradeLevel.GradeLevelID = (byte)dr["GradeLevelID"];
                         gradeLevel.GradeLevelName = dr["GradeLevelName"].ToString();
-
+                        
                         gradeLevels.Add(gradeLevel);
                     }
                 }

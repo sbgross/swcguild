@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using SWCLMS.Models;
@@ -12,7 +13,6 @@ namespace SWCLMS.BLL
     public class LmsUserManager
     {
         private ILmsUserRepository _lmsUserRepository;
-        
 
         public LmsUserManager(ILmsUserRepository lmsUserRepository)
         {
@@ -36,7 +36,24 @@ namespace SWCLMS.BLL
             return response;
         }
 
-        public DataResponse<LmsUser> GetUnassignedUserDetails(int UserID)
+        //public DataResponse<UserDetailsToEdit> GetUnassignedUserDetails(int UserID)
+        //{
+        //    var response = new LmsUser();
+
+        //    //try
+        //    //{
+        //        response = _lmsUserRepository.GetUnassignedUserDetails(UserID);
+        //    //    response.Success = true;
+        //    //}
+        //    //catch (Exception ex)
+        //    //{
+        //    //    response.Message = "User doesn't exist";
+        //    //}
+
+        //    return response;
+        //}
+
+        public DataResponse<LmsUser> GetUnassignedUserDetails(int UserID)  //original method
         {
             var response = new DataResponse<LmsUser>();
 
@@ -53,7 +70,8 @@ namespace SWCLMS.BLL
             return response;
         }
 
-        public DataResponse<LmsUser> UpdateUserDetails(LmsUser user)
+        public DataResponse<LmsUser> UpdateUserDetails(LMSUserUpdateRequest user)
+        //public DataResponse<LmsUser> UpdateUserDetails(LmsUser user)
         {
             var response = new DataResponse<LmsUser>();
 
@@ -68,6 +86,24 @@ namespace SWCLMS.BLL
             }
 
             return response;
-        }       
+        }
+
+        public AdminUserSearch Search(AdminUserSearch user)
+        {
+            var response = new AdminUserSearch();
+
+            try
+            {
+                response.AdminUserList = _lmsUserRepository.UserSearch(user);
+            }
+            catch (Exception ex)
+            {
+            }
+
+            return response;
+        }
     }
-}
+    
+    }
+
+
