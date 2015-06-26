@@ -1,0 +1,30 @@
+﻿@using SWCLMS.Models.Tables
+@model  SWCLMS.Models.DataResponse<List<SWCLMS.Models.StudentCourse>>
+
+@{
+    ViewBag.Title = "Index";
+}
+<body>
+
+<h2>Student Dashboard</h2>
+
+    <h4>My Classes</h4>
+    <div class="row">
+
+    @using (Html.BeginForm("View Grades", "Student", FormMethod.Post))  //, new { role = "form", id = "frmLogin" }))
+    {
+    <table>
+        <tbody>
+           @foreach (var course in Model.Data)
+        {
+            <tr>
+                <td>@course.CourseName</td>
+                <td>@course.CurrentGrade</td>
+                <td><button class="btn btn-primary">View Grades</button></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+        </div>
+</body>

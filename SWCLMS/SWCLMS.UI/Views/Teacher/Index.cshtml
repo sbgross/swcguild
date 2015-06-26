@@ -1,0 +1,22 @@
+@*@model SWCLMS.Models.DataResponse<List<SWCLMS.Models.TeacherCourses>>
+@{
+   ViewBag.Title = "Index";
+}
+
+<h2>Teacher Dashboard</h2>
+<h4>My Classes</h4>
+
+@if (Model.Success)
+{
+    <table>
+        <tbody>
+        @foreach (var course in Model.Data.Where(c => c.IsArchived == 0))
+        {
+            <tr>
+                <td>@course.CourseName</td>
+                <td>@course.NumberOfStudents</td>
+            </tr>
+        }
+        </tbody>
+   </table>
+}*@
