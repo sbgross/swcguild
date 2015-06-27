@@ -38,7 +38,7 @@ namespace SWCLMS.BLL
 
        public DataResponse<List<RosterAssignment>> CourseAssignmentGrades(int UserID)
         {
-            var response = new DataResponse<List<RosterAssignment>>(); //??
+            var response = new DataResponse<List<RosterAssignment>>(); 
 
             try
             {

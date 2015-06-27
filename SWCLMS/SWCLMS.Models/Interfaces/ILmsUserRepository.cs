@@ -13,5 +13,6 @@ namespace SWCLMS.Models.Interfaces
         LmsUser GetUnassignedUserDetails(int UserID);
         LmsUser UpdateUserDetails(LMSUserUpdateRequest user); //Void
         List<LmsUser> UserSearch(AdminUserSearch searchName);
+        LmsUser GetByAspNetId(string aspNetId);
     }
 }

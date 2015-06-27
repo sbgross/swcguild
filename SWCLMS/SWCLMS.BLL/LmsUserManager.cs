@@ -53,7 +53,7 @@ namespace SWCLMS.BLL
         //    return response;
         //}
 
-        public DataResponse<LmsUser> GetUnassignedUserDetails(int UserID)  //original method
+        public DataResponse<LmsUser> GetUnassignedUserDetails(int UserID) //original method
         {
             var response = new DataResponse<LmsUser>();
 
@@ -71,7 +71,7 @@ namespace SWCLMS.BLL
         }
 
         public DataResponse<LmsUser> UpdateUserDetails(LMSUserUpdateRequest user)
-        //public DataResponse<LmsUser> UpdateUserDetails(LmsUser user)
+            //public DataResponse<LmsUser> UpdateUserDetails(LmsUser user)
         {
             var response = new DataResponse<LmsUser>();
 
@@ -102,8 +102,14 @@ namespace SWCLMS.BLL
 
             return response;
         }
+
+        public LmsUser GetByAspNetId(string aspNetId)
+        {
+            return _lmsUserRepository.GetByAspNetId(aspNetId);
+        }
     }
-    
-    }
+
+}
+
 
 

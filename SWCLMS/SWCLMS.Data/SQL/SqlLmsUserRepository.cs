@@ -133,5 +133,35 @@ namespace SWCLMS.Data.SQL
             }
             return users;
         }
+
+        public LmsUser GetByAspNetId(string aspNetId)
+        {
+            LmsUser user = new LmsUser();
+
+            using (var cn = new SqlConnection(Settings.GetConnectionString()))
+            {
+                var cmd = new SqlCommand("ASPNetIDGet", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@AspNetID", aspNetId);
+
+                cn.Open();
+
+                using (var dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        user.UserID = (int)dr["UserID"];
+                        user.FirstName = dr["FirstName"].ToString();
+                        user.LastName = dr["LastName"].ToString();
+                        user.Email = dr["Email"].ToString();
+                        user.SuggestedRole = dr["SuggestedRole"].ToString();
+
+                        //if (dr["GradeLevel"] != DBNull.Value)
+                        //    user.GradeLevelID = (byte) dr["GradeLevelID"];
+                    }
+                }
+            }
+            return user;
+        }
     }
 }

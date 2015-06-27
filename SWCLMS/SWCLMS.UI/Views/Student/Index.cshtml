@@ -8,23 +8,35 @@
 
 <h2>Student Dashboard</h2>
 
-    <h4>My Classes</h4>
-    <div class="row">
+<h4>My Classes</h4>
 
-    @using (Html.BeginForm("View Grades", "Student", FormMethod.Post))  //, new { role = "form", id = "frmLogin" }))
+    @if (@Model.Success)
     {
-    <table>
-        <tbody>
-           @foreach (var course in Model.Data)
-        {
-            <tr>
-                <td>@course.CourseName</td>
-                <td>@course.CurrentGrade</td>
-                <td><button class="btn btn-primary">View Grades</button></td>
-            </tr>
-        }
-        </tbody>
-    </table>
-}
-        </div>
+        <fieldset>
+            <div class="row">
+
+                @using (Html.BeginForm("View Grades", "Student", FormMethod.Post))
+                {
+                    <table>
+                        <tbody>
+                        @foreach (var course in Model.Data)
+                        {
+                            <tr>
+                                <td>@course.CourseName</td>
+                                <td>@course.CurrentGrade</td>
+                                <td><button class="btn btn-primary">View Grades</button></td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                }
+            </div>
+
+        </fieldset>
+    }
+    else
+    {
+        <div class="danger"><p>@Model.Message</p></div>
+    }
+
 </body>

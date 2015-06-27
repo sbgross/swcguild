@@ -86,6 +86,12 @@ namespace SWCLMS.Data.Mocks
             List<LmsUser> user2 = new List<LmsUser>();
 
             return user2;
-        } 
+        }
+
+        public LmsUser GetByAspNetId(string aspNetId)
+        {
+            LmsUser user = new LmsUser();
+            return user;
+        }
     }
 }

@@ -7,6 +7,7 @@ using SWCLMS.BLL;
 using SWCLMS.Data.SQL;
 using SWCLMS.Models;
 using SWCLMS.UI.Models;
+using SWCLMS.UI.Utilities;
 
 namespace SWCLMS.UI.Controllers
 {
@@ -24,11 +25,13 @@ namespace SWCLMS.UI.Controllers
         // GET: Student
         public ActionResult Index()
         {
-            DataResponse<List<StudentCourse>> model = _lmsStudentCourseGradeManager.GetStudentCourses(1);
+            var currentUser = IdentityHelper.GetLmsUserForCurrentUser(this);
+            DataResponse<List<StudentCourse>> model = _lmsStudentCourseGradeManager.GetStudentCourses(currentUser.UserID);
             
             return View(model);
         }
-     
+
+        
         [HttpPost]
         public ActionResult ViewGrades()
         {

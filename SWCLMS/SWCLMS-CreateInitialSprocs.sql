@@ -40,23 +40,25 @@ WHERE UserID = @UserID
 
 --------------------------------------------------------
 ALTER PROCEDURE UserSearch(
---@UserID int,
-@LastNamePartial varchar(30) = Null,
-@FirstNamePartial varchar(30) = Null,
-@EmailPartial varchar(50) = Null,
-@RoleName varchar(256) = Null)
-
+@LastNamePartial varchar(30) = Null, 
+@FirstNamePartial varchar(30) = Null, 
+@EmailPartial varchar(50) = Null, 
+@RoleId varchar(256) = Null)
+ 
 AS 
-
-SELECT LastName, FirstName, Email, AspNetRoles.Name, AspNetUserRoles.UserId,AspNetRoles.Id, GradeLevelID 
-FROM  LMSUser
-FULL OUTER JOIN AspNetUserRoles ON LMSUser.ID = AspNetUserRoles.UserId
-FULL OUTER JOIN AspNetRoles ON AspNetUserRoles.RoleId = AspNetRoles.Id 
-WHERE 
-(LMSUser.ID IS NULL OR LMSUser.ID LIKE '%')
-AND (@LastNamePartial IS NULL OR LastName LIKE '@LastNamePartial%')
-AND (@FirstNamePartial IS NULL OR FirstName LIKE '@FirstNamePartial%')
-AND (@EmailPartial IS NULL OR Email LIKE '@EmailPartial%')
+ 
+SELECT DISTINCT LMSUser.UserID, LastName, FirstName, Email, GradeLevelID  
+FROM LMSUser
+ 
+LEFT JOIN AspNetUserRoles ON LMSUser.ID = AspNetUserRoles.UserId 
+LEFT JOIN AspNetRoles ON AspNetUserRoles.RoleId = AspNetRoles.Id 
+ 
+WHERE  
+(LMSUser.ID IS NULL OR LMSUser.ID LIKE '%') 
+AND (@LastNamePartial IS NULL OR LastName LIKE @LastNamePartial + '%') 
+AND (@FirstNamePartial IS NULL OR FirstName LIKE @FirstNamePartial + '%') 
+AND (@EmailPartial IS NULL OR Email LIKE @EmailPartial + '%') 
+AND (@RoleId IS NULL OR AspNetRoles.Id = @RoleId)
 
 execute UserSearch
 

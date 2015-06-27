@@ -11,10 +11,9 @@ namespace SWCLMS.Models
     {
         public int UserID { get; set; }
         public int CourseID { get; set; }
-        //public string CourseName { get; set; }
         public string CurrentGrade { get; set; }
         public string CourseName { get; set; }
-        //public string CourseAssignmentGrades { get; set; } //do we need this since there's an Assignment Table?
+        
     }
    
 }

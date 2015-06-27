@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LMSParentManager.cs" />
     <Compile Include="LmsStudentCourseGradeManager.cs" />
     <Compile Include="LmsCourseManager.cs" />
     <Compile Include="LMSGradeLevelManager.cs" />

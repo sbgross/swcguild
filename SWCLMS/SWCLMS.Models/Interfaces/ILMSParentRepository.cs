@@ -7,8 +7,8 @@ using SWCLMS.Models.Tables;
 
 namespace SWCLMS.Models.Interfaces
 {
-    public interface ILmsCourseRepository
+    public interface ILMSParentRepository
     {
-        List<TeacherCourses> GetTeacherCourses(int userID);
+        List<LmsUser> GetStudents(int UserID);
     }
 }

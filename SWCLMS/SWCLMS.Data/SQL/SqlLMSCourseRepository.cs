@@ -13,9 +13,9 @@ namespace SWCLMS.Data.SQL
 {
     public class SqlLMSCourseRepository : ILmsCourseRepository
     {
-        public List<TeacherCourse> GetTeacherCourses(int userID)
+        public List<TeacherCourses> GetTeacherCourses(int userID)
         {
-            List<TeacherCourse> courses = new List<TeacherCourse>();
+            List<TeacherCourses> courses = new List<TeacherCourses>();
 
             using (var cn = new SqlConnection(Settings.GetConnectionString()))
             {
@@ -28,10 +28,10 @@ namespace SWCLMS.Data.SQL
                 {
                     while (dr.Read())
                     {
-                        var course = new TeacherCourse();
-                        course.CourseID = (int) dr["CourseID"];
+                        var course = new TeacherCourses();
+                        course.CourseID = (int)dr["CourseID"];
                         course.CourseName = dr["CourseName"].ToString();
-                        course.IsArchived = (byte) dr["IsArchived"];
+                        course.IsArchived = (bool)dr["IsArchived"];
 
                         courses.Add(course);
                     }
@@ -41,4 +41,3 @@ namespace SWCLMS.Data.SQL
         }
     }
 }
-

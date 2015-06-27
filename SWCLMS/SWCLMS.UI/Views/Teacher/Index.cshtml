@@ -1,22 +1,48 @@
-@*@model SWCLMS.Models.DataResponse<List<SWCLMS.Models.TeacherCourses>>
+@model SWCLMS.Models.DataResponse<List<SWCLMS.Models.TeacherCourses>>
 @{
-   ViewBag.Title = "Index";
+    ViewBag.Title = "Index";
 }
 
 <h2>Teacher Dashboard</h2>
 <h4>My Classes</h4>
 
+<button type="button" class="btn btn-danger btn-lg" id="Add Class">Add Class</button>
+<div class="col-xs-4">
+    <a href="#" id="currentClasses">Current (@Model.Data.Count(c => c.IsArchived == false))</a>
+    <a href="#" id="archivedClasses">Archived (@Model.Data.Count(c => c.IsArchived == true))</a>
+</div>
 @if (Model.Success)
 {
-    <table>
-        <tbody>
-        @foreach (var course in Model.Data.Where(c => c.IsArchived == 0))
-        {
-            <tr>
-                <td>@course.CourseName</td>
-                <td>@course.NumberOfStudents</td>
-            </tr>
-        }
-        </tbody>
-   </table>
-}*@
+    <fieldset>
+        <div class="row"></div>
+        <div class="col-lg-6">
+            <table>
+
+                <tbody>
+
+                    @foreach (var course in Model.Data)
+                    {
+                        if (course.IsArchived)
+                        {
+                            <tr>
+                                <td>@course.CourseName</td>
+                                <td>@course.NumberOfStudents students</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr>
+                                <td>@course.CourseName</td>
+                                <td>@course.NumberOfStudents</td>
+                            </tr>
+                        }
+
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
+
+}

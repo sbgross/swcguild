@@ -17,10 +17,6 @@ namespace SWCLMS.UI.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                if (User.IsInRole("Admin"))
-                {
-                    return RedirectToAction("Index", "Admin");
-                }
                 if (User.IsInRole("Teacher"))
                 {
                     return RedirectToAction("Index", "Teacher");
@@ -32,6 +28,10 @@ namespace SWCLMS.UI.Controllers
                 if (User.IsInRole("Parent"))
                 {
                     return RedirectToAction("Index", "Parent");
+                }
+                if (User.IsInRole("Admin"))
+                {
+                    return RedirectToAction("Index", "Admin");
                 }
 
                 return RedirectToAction("NotApprovedYet", "Home");

@@ -46,6 +46,7 @@
     <Compile Include="AdminUserSearch.cs" />
     <Compile Include="DataResponse.cs" />
     <Compile Include="Interfaces\ILmsCourseRepository.cs" />
+    <Compile Include="Interfaces\ILMSParentRepository.cs" />
     <Compile Include="Interfaces\ILmsRoleRepository.cs" />
     <Compile Include="Interfaces\ILmsStudentCourseRepository.cs" />
     <Compile Include="Interfaces\ILmsUserRepository.cs" />
