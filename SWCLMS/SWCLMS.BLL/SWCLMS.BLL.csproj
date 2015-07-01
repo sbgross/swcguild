@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LMSParentManager.cs" />
+    <Compile Include="LMSRosterManager.cs" />
     <Compile Include="LmsStudentCourseGradeManager.cs" />
     <Compile Include="LmsCourseManager.cs" />
     <Compile Include="LMSGradeLevelManager.cs" />

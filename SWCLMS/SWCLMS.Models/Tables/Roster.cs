@@ -12,6 +12,6 @@ namespace SWCLMS.Models.Tables
         public int CourseID { get; set; }
         public int UserID { get; set; }
         public string CurrentGrade { get; set; }
-        public byte IsDeleted { get; set; }  //bit??      
+        public bool IsDeleted { get; set; }  //bit??      
     }
 }

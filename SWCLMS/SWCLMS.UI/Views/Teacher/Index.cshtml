@@ -4,6 +4,12 @@
 }
 
 <h2>Teacher Dashboard</h2>
+
+<span>
+
+    @Html.ActionLink("Roster", "Roster", "Teacher", new { id = @Model.Equals(1) }, null) |
+
+</span>
 <h4>My Classes</h4>
 
 <button type="button" class="btn btn-danger btn-lg" id="Add Class">Add Class</button>
