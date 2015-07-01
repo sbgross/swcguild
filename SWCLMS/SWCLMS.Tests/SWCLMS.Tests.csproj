@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IntegrationTests\GradeLevelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlLmsRoleRepositoryTest.cs" />
     <Compile Include="SqlLmsStudentCourseRepositoryTest.cs" />

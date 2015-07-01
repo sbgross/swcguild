@@ -222,7 +222,11 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\LoginRegistrationVM.cs" />
+<<<<<<< HEAD
     <Compile Include="Models\StudentCourseAssignmentGradesVM.cs" />
+=======
+    <Compile Include="Models\RosterViewModel.cs" />
+>>>>>>> origin/master
     <Compile Include="Models\StudentDashboardVM.cs" />
     <Compile Include="Models\UserDetailsToEditVM.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -310,6 +314,7 @@
     <Content Include="Views\Parent\Index.cshtml" />
     <Content Include="Views\Home\NotApprovedYet.cshtml" />
     <Content Include="Views\Student\ViewGrades.cshtml" />
+    <Content Include="Views\Teacher\Roster.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

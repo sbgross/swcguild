@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Mocks\MockLMSParentRepository.cs" />
     <Compile Include="Mocks\MockLmsRoleRepository.cs" />
+    <Compile Include="Mocks\MockLmsRosterRepository.cs" />
     <Compile Include="Mocks\MockLmsStudentCourseRepository.cs" />
     <Compile Include="Mocks\MockLmsUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="SQL\SqlLMSGradeLevelRepository.cs" />
     <Compile Include="SQL\SqlLMSParentRepository.cs" />
     <Compile Include="SQL\SqlLmsRoleRepository.cs" />
+    <Compile Include="SQL\SqlLMSRosterRepository.cs" />
     <Compile Include="SQL\SqlLmsStudentCourseRepository.cs" />
     <Compile Include="SQL\SqlLmsUserRepository.cs" />
   </ItemGroup>

@@ -19,6 +19,7 @@ namespace SWCLMS.BLL
             Bind<ILmsRoleRepository>().To<MockLmsRoleRepository>();
             Bind<ILmsStudentCourseRepository>().To<MockLmsStudentCourseRepository>();
             Bind<ILMSParentRepository>().To<MockLMSParentRepository>();
+            Bind<ILmsRosterRepository>().To<MockLmsRosterRepository>();
         }
     }
 
@@ -31,6 +32,8 @@ namespace SWCLMS.BLL
             Bind<ILmsStudentCourseRepository>().To<SqlLmsStudentCourseRepository>();
             Bind<ILmsCourseRepository>().To<SqlLMSCourseRepository>();
             Bind<ILMSParentRepository>().To<SqlLMSParentRepository>();
+            Bind<ILmsRosterRepository>().To<SqlLMSRosterRepository>();
+            Bind<ILMSGradeLevelRepository>().To<SqlLMSGradeLevelRepository>();
         }
     }
 

@@ -60,11 +60,6 @@ AND (@FirstNamePartial IS NULL OR FirstName LIKE @FirstNamePartial + '%')
 AND (@EmailPartial IS NULL OR Email LIKE @EmailPartial + '%') 
 AND (@RoleId IS NULL OR AspNetRoles.Id = @RoleId)
 
-execute UserSearch
-
-select *
-from LMSUser
-
 
 --------------------------------------------------------
 CREATE PROCEDURE UserStudentDashboard(
@@ -145,44 +140,124 @@ GROUP BY CourseName,CurrentGrade,SubjectName,StartDate,EndDate,GradeLevel,Course
 ORDER BY CurrentGrade DESC
 
 --------------------------------------------------------
-CREATE PROCEDURE RosterGetStudentInCourse  (   --6/10 Slide #7 **DONE**
-@UserID int,                            --search for students in course
+ALTER PROCEDURE RosterGetStudentsInCourse  (
+@TeacherID int,                            
 @CourseID int)
 
 AS
 
-SELECT FirstName,LastName,Email,IsDeleted,GradeLevelID, CourseID
-FROM LMSUser
-INNER JOIN Roster ON LMSUser.UserID = Roster.UserID
-WHERE CourseID = @CourseID AND IsDeleted = 0
-
---------------------------------------------------------
-CREATE PROCEDURE RosterGetStudentNotInCourse  (   --6/10 Slide #7 **DONE**
-@UserID int,                               --display students not in course
-@CourseID int,
-@LastName varchar(30) = NULL,
-@GradeLevelID tinyint = NULL)
-
-AS
-
-SELECT FirstName,LastName,GradeLevelID,CourseID,RosterID
+SELECT FirstName,LastName,Email,IsDeleted,GradeLevelID,RosterID, Roster.CourseID
 FROM LMSUser
 LEFT JOIN Roster ON LMSUser.UserID = Roster.UserID
-WHERE Roster.RosterID IS NULL AND GradeLevelID IS NOT NULL OR CourseID != @CourseID
+LEFT JOIN Course ON LMSUser.UserID = Course.TeacherID
+WHERE Roster.CourseID = @CourseID AND IsDeleted = 0
+ORDER BY LastName
 
 --------------------------------------------------------
-CREATE PROCEDURE RosterInsertStudent (   --6/10 Slide #7 **DONE**
-@CourseID int,                           --insert student into course
-@UserID int,                             --Does roster id change on delete?
-@CurrentGrade varchar(3) = NULL,
-@IsDeleted BIT = NULL)
+CREATE PROCEDURE RosterInsertStudent (   
+@CourseID int,                           
+@UserID int,                             
+@CurrentGrade varchar(3) = NULL)
 
 AS
 
+IF Exists (SELECT RosterID FROM Roster WHERE CourseID = @CourseID AND UserID = @UserID)
+
+UPDATE Roster
+SET IsDeleted = 0
+WHERE UserID = @UserID AND CourseID = @CourseID;
+
+ELSE
+
 INSERT INTO Roster (CourseID,UserID,CurrentGrade,IsDeleted)
-VALUES (@CourseID,@UserID,@CurrentGrade,@IsDeleted)
+VALUES (@CourseID,@UserID,@CurrentGrade,0)
 
 --------------------------------------------------------
+--ALTER PROCEDURE RosterGetStudentsNotInCourse(
+--@LastNamePartial varchar(30) = Null,  
+--@GradeLevelID varchar(256) = Null,
+--@CourseID int = Null)
+ 
+--AS 
+ 
+--SELECT LmsUser.UserID, FirstName, LastName, GradeLevelID, CourseID
+--FROM LMSUser
+
+--LEFT JOIN Roster on LMSUser.UserID = Roster.UserID
+ 
+--WHERE  
+--((@LastNamePartial IS NULL OR LastName LIKE @LastNamePartial + '%')
+--AND (@GradeLevelID IS NULL OR GradeLevelID LIKE @GradeLevelID + '%')
+--AND (@CourseID != CourseID))
+--OR ((@LastNamePartial IS NULL OR LastName LIKE @LastNamePartial + '%')
+--AND (@GradeLevelID IS NULL OR GradeLevelID LIKE @GradeLevelID + '%')
+--AND (@CourseID = CourseID AND IsDeleted = 1))
+--OR ((LMSUser.UserID NOT IN (SELECT Roster.UserID FROM Roster))
+--AND (SuggestedRole = 'Student')
+--AND (@GradeLevelID IS NULL OR GradeLevelID LIKE @GradeLevelID + '%')
+--AND (@CourseID != CourseID))
+
+--ALTER PROCEDURE RosterGetStudentsNotInCourse(
+--@LastName varchar(30) = Null,  
+--@GradeLevelID varchar(256) = Null,
+--@CourseID int = Null)
+ 
+--AS 
+
+--SELECT UserID, FirstName, LastName, GradeLevelName
+--FROM LMSUser
+--	INNER JOIN GradeLevel ON LMSUser.GradeLevelID = GradeLevel.GradeLevelID
+--WHERE UserID NOT IN (SELECT UserID FROM Roster WHERE CourseID = @CourseID AND IsDeleted = 0
+--AND LastName LIKE @LastName + '%'
+--AND @GradeLevelID IS NOT NULL OR LMSUser.GradeLevelID LIKE @GradeLevelID + '%')
+
+--------------------------------------------------------
+ALTER PROCEDURE RosterGetStudentsNotInCourse (
+@LastName varchar(30) = Null,  
+@GradeLevelID tinyint = Null,
+@CourseID int = Null
+)
+
+AS
+
+SELECT LmsUser.UserID, FirstName, LastName, GradeLevelName
+FROM LMSUser
+	INNER JOIN GradeLevel ON LMSUser.GradeLevelID = GradeLevel.GradeLevelID
+WHERE LMSUser.UserID NOT IN (SELECT UserID FROM Roster WHERE CourseID = @CourseID AND IsDeleted = 0)
+AND (@GradeLevelID IS NULL OR LMSUser.GradeLevelID = @GradeLevelID)
+AND (@LastName IS NULL or LastName LIKE @LastName + '%')
+AND SuggestedRole = 'Student'
+ORDER BY LastName
+
+--------------------------------------------------------
+--ALTER PROCEDURE TEST (
+--@CourseID int = 2
+--)
+
+--AS
+
+--SELECT LmsUser.UserID, FirstName, LastName, GradeLevelID, CourseID, RosterID, IsDeleted
+--FROM LMSUser
+
+--LEFT JOIN Roster on LMSUser.UserID = Roster.UserID
+
+--WHERE LMSUser.UserID NOT IN (SELECT UserID FROM Roster WHERE CourseID = @CourseID AND IsDeleted = 0)
+--and GradeLevelID IS NOT NULL
+
+
+--exec TEST
+--------------------------------------------------------
+ALTER PROCEDURE RosterRemoveStudent (
+@RosterID int
+) 
+
+AS
+
+UPDATE Roster
+SET IsDeleted = 1
+WHERE RosterID = @RosterID
+--------------------------------------------------------
+
 CREATE PROCEDURE CourseGetGradebook  (  --6/10 Slide #8 **DONE**
 @UserID int,                             
 @CourseID int)
@@ -289,15 +364,15 @@ FROM LMSUser
 	INNER JOIN AspNetRoles ON AspNetUserRoles.RoleId = AspNetRoles.Id
 WHERE LMSUser.UserId = @UserID
 
-CREATE PROCEDURE LMSUserSelectUnassigned
+ALTER PROCEDURE LMSUserSelectUnassigned
 
 AS
 
 SELECT *
 FROM LMSUser U
 	INNER JOIN AspNetUsers ON U.ID = AspNetUsers.Id
-	LEFT JOIN  ON AspNetUsers.Id = AspNetUserRoles.UserId
-WHERE AspNetUserRoles.UserId IS NULL
+	LEFT JOIN  AspNetUserRoles ON AspNetUsers.Id = AspNetUserRoles.UserId
+WHERE AspNetUsers.Id NOT IN (SELECT AspNetUserRoles.UserId FROM AspNetUserRoles)
 
 --------------------------------------------------------
 CREATE PROCEDURE AspNetUserDeleteRoles

@@ -9,7 +9,7 @@ namespace SWCLMS.Models.Tables
 {
     public class GradeLevel
     {
-        public byte GradeLevelID { get; set; }
+        public byte? GradeLevelID { get; set; }
         public string GradeLevelName { get; set; }
        
     }
