@@ -42,7 +42,7 @@ namespace SWCLMS.Data.SQL
         }
 
 
-        public List<RosterAssignment> CourseAssignmentGrades(int UserID) // or CourseID
+        public List<RosterAssignment> CourseAssignmentGrades(int CourseID)
         {
             List<RosterAssignment> grades = new List<RosterAssignment>();
 
@@ -50,7 +50,7 @@ namespace SWCLMS.Data.SQL
             {
                 var cmd = new SqlCommand("CourseAssignmentGrades", cn); //sproc has "slide12" in its name
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@UserID", UserID); //or CourseID
+                cmd.Parameters.AddWithValue("@CourseID", CourseID); //changed from UserID
 
                 cn.Open();
                 using (var dr = cmd.ExecuteReader())
@@ -60,6 +60,7 @@ namespace SWCLMS.Data.SQL
                         var assignments = new RosterAssignment();
                         assignments.AssignmentID = (int) dr["AssignmentID"];
                         assignments.Grade = dr["Grade"].ToString();
+                        assignments.Percentage = (decimal) dr["Percentage"];
 
                         grades.Add(assignments);
                     }

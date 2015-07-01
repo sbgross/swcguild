@@ -10,5 +10,6 @@ namespace SWCLMS.Models
     public class DataResponse<T> : Response
     {
         public T Data { get; set; }
+        public int Count { get; set; }
     }
 }

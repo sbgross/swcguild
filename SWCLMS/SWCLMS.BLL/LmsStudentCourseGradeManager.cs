@@ -36,13 +36,13 @@ namespace SWCLMS.BLL
         }
 
 
-       public DataResponse<List<RosterAssignment>> CourseAssignmentGrades(int UserID)
+       public DataResponse<List<RosterAssignment>> CourseAssignmentGrades(int CourseID)
         {
-            var response = new DataResponse<List<RosterAssignment>>(); 
+           var response = new DataResponse<List<RosterAssignment>>(); 
 
             try
             {
-                response.Data = _lmsStudentCourseRepository.CourseAssignmentGrades(UserID);
+                response.Data = _lmsStudentCourseRepository.CourseAssignmentGrades(CourseID);
                 response.Success = true;
             }
             catch (Exception ex)

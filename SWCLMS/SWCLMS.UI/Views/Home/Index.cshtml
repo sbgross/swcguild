@@ -36,33 +36,42 @@
         @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form", id = "frmLogin" }))
         {
             @Html.AntiForgeryToken()
+            //@Html.ValidationSummary()
             <div class="form-group">
                 @Html.LabelFor(m => m.RegisterViewModel.FirstName)
                 @Html.TextBoxFor(m => m.RegisterViewModel.FirstName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.RegisterViewModel.FirstName)
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.RegisterViewModel.LastName)
-                @Html.PasswordFor(m => m.RegisterViewModel.LastName, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.RegisterViewModel.LastName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.RegisterViewModel.LastName)
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.RegisterViewModel.Email)
-                @Html.PasswordFor(m => m.RegisterViewModel.Email, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.RegisterViewModel.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.RegisterViewModel.Email)
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.RegisterViewModel.Password)
                 @Html.PasswordFor(m => m.RegisterViewModel.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.RegisterViewModel.Password)
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.RegisterViewModel.ConfirmPassword)
                 @Html.PasswordFor(m => m.RegisterViewModel.ConfirmPassword, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.RegisterViewModel.ConfirmPassword)
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.RegisterViewModel.SuggestedRole)
-                @Html.DropDownListFor(m => m.RegisterViewModel.SuggestedRoles, Model.RegisterViewModel.SuggestedRoles, new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.RegisterViewModel.SuggestedRole, Model.RegisterViewModel.SuggestedRoles, new { @class = "form-control" })
+                @*@Html.DropDownList("RegisterViewModel.SuggestedRole", Model.RegisterViewModel.SuggestedRoles, new { @class = "form-control" })*@
+                @Html.ValidationMessageFor(m => m.RegisterViewModel.SuggestedRole)
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.RegisterViewModel.GradeLevelID)
-                @Html.DropDownListFor(m => m.RegisterViewModel.LoginScreenDetailsToEdit.GradeLevelID, Model.RegisterViewModel.GradeLevels, "- N/A -", new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.RegisterViewModel.GradeLevelID, Model.RegisterViewModel.GradeLevels, "- N/A -", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.RegisterViewModel.GradeLevelID)
             </div>
 
             <button class="btn btn-primary">Register</button>

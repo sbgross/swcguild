@@ -107,6 +107,23 @@ namespace SWCLMS.BLL
         {
             return _lmsUserRepository.GetByAspNetId(aspNetId);
         }
+
+
+        public Response Create(LmsUser user)   // Lis 6/28
+        {
+            var response = new Response();
+            try
+            {
+                _lmsUserRepository.Create(user);
+                response.Success = true;
+            }
+            catch (Exception ex)
+            {
+                response.Message = ex.Message;
+            }
+
+            return response;
+        }
     }
 
 }

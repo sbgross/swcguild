@@ -77,7 +77,8 @@ namespace SWCLMS.Data.SQL
             {                
                 var cmd = new SqlCommand("AspNetUserDeleteRoles", cn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@Id",aspNetUserId);
+                cmd.Parameters.AddWithValue("@Id",aspNetUserId); 
+                
 
                 cn.Open();
                 cmd.ExecuteNonQuery();

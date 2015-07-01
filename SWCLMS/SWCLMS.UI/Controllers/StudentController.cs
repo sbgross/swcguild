@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using SWCLMS.BLL;
 using SWCLMS.Data.SQL;
 using SWCLMS.Models;
+using SWCLMS.Models.Tables;
 using SWCLMS.UI.Models;
 using SWCLMS.UI.Utilities;
 
@@ -32,10 +33,22 @@ namespace SWCLMS.UI.Controllers
         }
 
         
-        [HttpPost]
-        public ActionResult ViewGrades()
+        //GET 
+        public ActionResult ViewGrades() 
         {
-            return View();
+            //var currentUser = IdentityHelper.GetLmsUserForCurrentUser(this);  //added 6/30
+            //DataResponse<List<RosterAssignment>> model = _lmsStudentCourseGradeManager.CourseAssignmentGrades(currentUser.UserID);  //added 6/30
+
+            return View();  //(model.Data);  //added 6/30
         }
+
+        //[HttpPost]  //added 7/1
+        //public ActionResult ViewGrades(int courseID)
+        //{
+        //    _lmsStudentCourseGradeManager.CourseAssignmentGrades(courseID);
+
+        //    return View();
+
+        //}
     }
 }

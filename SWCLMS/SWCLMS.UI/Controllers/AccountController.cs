@@ -24,14 +24,9 @@ namespace SWCLMS.UI.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-
-        public AccountController(LmsUserManager lmsUserManager)
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, LmsUserManager lmsUserManager)
         {
             _lmsUserManager = lmsUserManager;
-        }
-
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
-        {
             UserManager = userManager;
             SignInManager = signInManager;
         }
@@ -42,7 +37,10 @@ namespace SWCLMS.UI.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set { _signInManager = value; }
+            private set
+            {
+                _signInManager = value;
+            }
         }
 
 
@@ -138,7 +136,7 @@ namespace SWCLMS.UI.Controllers
         //    return System.Web.UI.WebControls.View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
         //}
 
-        ////
+        //
         //// POST: /Account/VerifyCode
         //[HttpPost]
         //[AllowAnonymous]
@@ -168,58 +166,59 @@ namespace SWCLMS.UI.Controllers
         //    }
         //}
 
-        
+
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
-        {            
-            var gradeLevelRepo = new SqlLMSGradeLevelRepository();
-            var model = new RegisterViewModel();
-            model.CreateGradeLevel(gradeLevelRepo.GradeLevelGetAll());
-            return View(model);                    
+        {
+            return View();
+            //var gradeLevelRepo = new SqlLMSGradeLevelRepository();
+            //var model = new RegisterViewModel();
+            //model.CreateGradeLevel(gradeLevelRepo.GradeLevelGetAll());
+            
         }
 
-        
-         //POST: /Account/Register
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> Register(RegisterViewModel model)
-        //{
-        //    if (ModelState.fIsValid)
-        //    {
-        //        var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-        //        var result = await UserManager.CreateAsync(user, model.Password);
-                
-        //        if (result.Succeeded)
-        //        {
-        //            var lmsUser = new LmsUser();
-        //            lmsUser.Email = model.Email;
-        //            lmsUser.FirstName = model.FirstName;
-        //            lmsUser.LastName = model.LastName;
-        //            lmsUser.Id = user.Id;
-        //            lmsUser.GradeLevelID = model.GradeLevelID;
-        //            lmsUser.SuggestedRole = model.SuggestedRole;
 
-        //            _lmsUserManager.Create(lmsUser);
+        //POST: /Account/Register    //Lis worked on 6/28
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Register(RegisterViewModel RegisterViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = RegisterViewModel.Email, Email = RegisterViewModel.Email };
+                var result = await UserManager.CreateAsync(user, RegisterViewModel.Password);
 
+                if (result.Succeeded)
+                {
+                    var lmsUser = new LmsUser();
+                    lmsUser.Email = RegisterViewModel.Email;
+                    lmsUser.FirstName = RegisterViewModel.FirstName;
+                    lmsUser.LastName = RegisterViewModel.LastName;
+                    lmsUser.ID = user.Id;
+                    lmsUser.GradeLevelID = RegisterViewModel.GradeLevelID;
+                    lmsUser.SuggestedRole = RegisterViewModel.SuggestedRole;
 
-        //            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    _lmsUserManager.Create(lmsUser);
 
-        //            // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-        //            // Send an email with this link
-        //            // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-        //            // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-        //            // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-        //            return RedirectToAction("NotApprovedYet", "Home");
-        //        }
-        //        AddErrors(result);
-        //    }
+                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-        //    // If we got this far, something failed, redisplay form
-        //    return View(model);
-        //}
+                    return RedirectToAction("NotApprovedYet", "Home");
+                }
+                AddErrors(result);
+            }
+
+            // If we got this far, something failed, redisplay form
+            //return RedirectToAction("Home",RegisterViewModel);
+            return View();
+        }
 
         
         // GET: /Account/ConfirmEmail
@@ -435,14 +434,14 @@ namespace SWCLMS.UI.Controllers
         //}
 
         ////
-        //// POST: /Account/LogOff
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult LogOff()
-        //{
-        //    AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-        //    return RedirectToAction("Index", "Home");
-        //}
+        // POST: /Account/LogOff
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LogOff()
+        {
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            return RedirectToAction("Index", "Home");
+        }
 
         ////
         //// GET: /Account/ExternalLoginFailure
@@ -456,21 +455,21 @@ namespace SWCLMS.UI.Controllers
         //// Used for XSRF protection when adding external logins
         //private const string XsrfKey = "XsrfId";
 
-        //private IAuthenticationManager AuthenticationManager
-        //{
-        //    get
-        //    {
-        //        return HttpContext.GetOwinContext().Authentication;
-        //    }
-        //}
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
+        }
 
-        //private void AddErrors(IdentityResult result)
-        //{
-        //    foreach (var error in result.Errors)
-        //    {
-        //        ModelState.AddModelError("", error);
-        //    }
-        //}
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+        }
 
         //private ActionResult RedirectToLocal(string returnUrl)
         //{

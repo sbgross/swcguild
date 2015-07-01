@@ -40,7 +40,7 @@ namespace SWCLMS.UI.Controllers
             var gradeLevelRepo = new SqlLMSGradeLevelRepository();
             var model = new LoginRegistrationVM();            
             model.RegisterViewModel.CreateGradeLevel(gradeLevelRepo.GradeLevelGetAll());
-            model.RegisterViewModel.PopulateSelectListItems();
+            model.RegisterViewModel.PopulateSelectListItems(gradeLevelRepo.GradeLevelGetAll());//Added 6/28--Lis
 
             return View(model);
         }

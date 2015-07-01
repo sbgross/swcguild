@@ -93,5 +93,11 @@ namespace SWCLMS.Data.Mocks
             LmsUser user = new LmsUser();
             return user;
         }
+
+        public void Create(LmsUser user)
+        {
+            LmsUser user3 = new LmsUser();
+            
+        }
     }
 }

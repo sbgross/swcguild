@@ -14,5 +14,6 @@ namespace SWCLMS.Models.Interfaces
         LmsUser UpdateUserDetails(LMSUserUpdateRequest user); //Void
         List<LmsUser> UserSearch(AdminUserSearch searchName);
         LmsUser GetByAspNetId(string aspNetId);
+        void Create(LmsUser user);  //added 6/28 by Lis
     }
 }

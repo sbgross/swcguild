@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using System.Web.UI.WebControls;
 using SWCLMS.Models.Tables;
 using SWCLMS.UI.Utilities;
@@ -33,8 +34,6 @@ namespace SWCLMS.UI.Models
         //            );
         //    }
         //}
-
-
     }
 
     public class LoginViewModel
@@ -92,31 +91,29 @@ namespace SWCLMS.UI.Models
         public LmsUser LoginScreenDetailsToEdit { get; set; }
 
 
-        public void PopulateSelectListItems()
+        public void PopulateSelectListItems(List<GradeLevel> gradeLevels)
         {
-            SuggestedRoles = new List<SelectListItem>()
-                //GradeLevels = SelectListItemCreator.CreateFrom(gradeLevels);
-
+            GradeLevels = SelectListItemCreator.CreateFrom(gradeLevels);  //original but why is this here?
+            // 6/29 why is this here??
+            SuggestedRoles = new List<SelectListItem> 
             {
-                new SelectListItem() {Text = "Student", Value = "Student"},
-                new SelectListItem() {Text = "Parent", Value = "Parent"},
-                new SelectListItem() {Text = "Teacher", Value = "Teacher"}
-
+                new SelectListItem() { Text = "Student", Value = "Student" }, //this isn't being accessed
+                new SelectListItem() { Text = "Parent", Value = "Parent" },
+                new SelectListItem() { Text = "Teacher", Value = "Teacher" }
             };
-        }
-
-        public void CreateGradeLevel(List<GradeLevel> gradeLevels)
+       }
+        
+        public void CreateGradeLevel(List<GradeLevel> gradeLevels)  //similar method for CreateSuggestedRole doesn't work--SuggestedRole isn't recognized
         {
             GradeLevels = new List<SelectListItem>();
 
             foreach (var g in gradeLevels)
             {
                 GradeLevels.Add(
-                    new SelectListItem() { Text = g.GradeLevelName, Value = g.GradeLevelID.ToString() }
+                    new SelectListItem() {Text = g.GradeLevelName, Value = g.GradeLevelID.ToString()}
                     );
             }
         }
-
     }
 }
 

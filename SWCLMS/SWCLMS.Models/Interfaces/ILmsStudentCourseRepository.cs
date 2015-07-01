@@ -10,6 +10,6 @@ namespace SWCLMS.Models.Interfaces
     public interface ILmsStudentCourseRepository
     {
         List<StudentCourse> GetStudentCourses(int userID);
-        List<RosterAssignment> CourseAssignmentGrades(int userID);
+        List<RosterAssignment> CourseAssignmentGrades(int CourseID);
     }
 }
