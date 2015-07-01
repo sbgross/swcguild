@@ -222,11 +222,8 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\LoginRegistrationVM.cs" />
-<<<<<<< HEAD
     <Compile Include="Models\StudentCourseAssignmentGradesVM.cs" />
-=======
     <Compile Include="Models\RosterViewModel.cs" />
->>>>>>> origin/master
     <Compile Include="Models\StudentDashboardVM.cs" />
     <Compile Include="Models\UserDetailsToEditVM.cs" />
     <Compile Include="Models\IdentityModels.cs" />
